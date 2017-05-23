@@ -5,7 +5,9 @@ var typeToColor  = {
   'PR' : 4,
   'SP' : 6,
   'FP' : 8
-}
+};
+
+var nodeToIndex = {};
 
 function nodesReader(allText){
 
@@ -21,7 +23,7 @@ function nodesReader(allText){
 
   for( var i = 0 ; i < whole_node_count ; i++ ){
 
-    var data = allTextLines[i+1].split(',');
+    var data = allTextLines[ i + 1 ].split(',');
 
     if( data.length == headers.length ){
 
@@ -40,6 +42,7 @@ function nodesReader(allText){
           node['color'] = typeToColor[ data[j] ];
         }
       }
+      nodeToIndex[ node['id'] ] = i;
       nodes.push(node);
     }
   }
