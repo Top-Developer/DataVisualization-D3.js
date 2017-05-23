@@ -5,7 +5,7 @@ function nodesReader(allText){
     var headers = allTextLines[0].split(',');
     var lines = [];
 
-    whole_node_count = allTextLines.length-2;
+    var whole_node_count = allTextLines.length-1;
 
     for( var i=0 ; i < whole_node_count ; i++ ){
     	var data = allTextLines[i+1].split(',');
@@ -27,8 +27,9 @@ function nodesReader(allText){
                     //node['color'] = colorsForBU[data[j]];
                     node['category'] = data[j];
                 }
-                nodes.push(node);
             }
+            nodes.push(node);
         }
     }
+    return nodes;
 }
