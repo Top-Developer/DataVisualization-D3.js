@@ -1,6 +1,6 @@
 'use strict'
 $(document).ready(function(){
-	
+
 	var project = {};
 
 	$.ajax({
@@ -9,7 +9,7 @@ $(document).ready(function(){
 		dataType : "text",
 		success : function(data){
 
-			project.nodes = nodesReader(data);
+			project.nodes = nodesReader(data);console.log(project.nodes);
 
 			$.ajax({
 				type : "GET",
@@ -17,9 +17,9 @@ $(document).ready(function(){
 				dataType : "text",
 				success : function(data){
 
-					project.edges = edgesReader(data);
-					
-					console.log(project.edges);
+					project.edges = edgesReader(data);console.log(project.edges);
+
+					network_show(project.nodes, project.edges);
 				}
 			});
 		}

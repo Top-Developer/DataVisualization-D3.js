@@ -5,16 +5,16 @@ function network_show(nodes, edges){
   width = +svg.attr('width'),
   height = +svg.attr('height');
 
-	var color = d3.scaleOridinal(d3.schemeCategory20);
+	var color = d3.scaleOrdinal(d3.schemeCategory20);
 
-	var simulation = d3.forceSimuilation()
+	var simulation = d3.forceSimulation()
 	.force('link', d3.forceLink().id(function(d){return d.id;}))
   .force('charge', d3.forceManyBody())
   .force('center', d3.forceCenter(width / 2, height / 2));
 
   var link = svg
-  .append('g').
-  attr('class', 'links')
+  .append('g')
+  .attr('class', 'links')
   .selectAll('line')
   .data(edges)
   .enter()
@@ -32,7 +32,7 @@ function network_show(nodes, edges){
   .append('circle')
   .attr('r', 5)
   .attr('fill', function(d){
-    return color(d.group);
+    return color(d.color);
   })
   .call(d3.drag()
   .on('start', dragstarted)
