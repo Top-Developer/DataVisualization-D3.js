@@ -9,6 +9,47 @@
 	</head>
 	<body>
 		<svg width = "1200" height = "800"></svg>
+		<div id="control-pane">
+      <h2 class="underline">filters</h2>
+      <div>
+        <h3>search nodes by id</h3>
+        <div>
+          <input id="id-search" type="text">
+          <button class="btn-search" onclick="javascript:node_search();">Search</button>
+        </div>
+      </div>
+      <span class="line"></span>
+      <div>
+        <h3>min variance :&nbsp;<span id="min-variance-val">0</span></h3>
+        0 <input id="min-variance" min="0" max="30" value="0" type="range">
+        <span id="max-variance-value">30</span><br>
+      </div>
+      <span class="line"></span>
+      <div>
+        <h3>business unit</h3>
+        <select id="business-category"><option value="">All categories</option><option>BU01</option></select>
+      </div>
+      <span class="line"></span>
+      <div>
+        <h3>types</h3>
+        <div class="legend" id="sup-resource">
+          <div id="color-box-cyan" class="color-box"></div>
+          <div class="comment">Support Resource</div>
+        </div>
+        <div class="legend" id="pro-resource">
+          <div id="color-box-purple" class="color-box"></div>
+          <div class="comment">Production Resource</div>
+        </div>
+        <div class="legend" id="semi-finished">
+          <div id="color-box-green" class="color-box"></div>
+          <div class="comment">Semi-finished Product</div>
+        </div>
+        <div class="legend" id="finished">
+          <div id="color-box-blue" class="color-box"></div>
+          <div class="comment">Finished Product</div>
+        </div>
+      </div>
+    </div>
 		<script type = 'text/javascript' src = 'script.js'></script>
 	</body>
 </html>

@@ -21,6 +21,7 @@ function network_show(nodes, edges){
   .append('line')
   .attr('stroke-width', function(d){
 		var w = Math.sqrt(d['value']);
+		if ( w == 0 ) w = 0.01;
 		if ( w > 1 ) w = 1;
     return w;
   });

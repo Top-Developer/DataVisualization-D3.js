@@ -9,7 +9,177 @@
 }
 
 svg{
-  width : 100%;
-  height : 100%;
   margin :50px 300px;
+}
+body {
+  color: #333;
+  font-size: 14px;
+  font-family: Lato, sans-serif;
+}
+a{
+  text-decoration: none;
+}
+#graph-container {
+  top: 50px;
+  bottom: 50px;
+  left: 300px;
+  right: 300px;
+  position: absolute;
+  border : 2px solid #ccc;
+  background-color: #ddd;
+}
+#sel-graph-container {
+  position : absolute;
+  top : 5%;
+  bottom : 5%;
+  left : 5%;
+  right : 5%;
+  background-color: rgb(249, 247, 237);
+}
+#control-pane, #report, #inout-report, #reportOnTreeMap{
+  top: 10px;
+  right: 10px;
+  position: absolute;
+  width: 240px;
+  background-color: rgb(249, 247, 237);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  max-height: 800px;
+  overflow: auto;
+}
+#graph-report {
+  position: absolute;
+  top: 100px;
+  bottom: 100px;
+  right : 20%;
+  left : 20%;
+  background-color: rgb(249, 247, 237);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  max-height: 800px;
+  overflow: auto;
+}
+#control-pane > div, #report > div, #inout-report > div, #reportOnTreeMap>div{
+  margin: 10px;
+  overflow-x: auto;
+}
+.line {
+  clear: both;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #aac789;
+  background: transparent;
+}
+h2, h3, h4 {
+  padding: 0;
+  margin : 10px;
+  font-variant: small-caps;
+}
+
+.green {
+  color: #437356;
+}
+
+h2.underline {
+  color: #437356;
+  background: #f4f0e4;
+  margin: 0;
+  border-radius: 2px;
+  padding: 8px 12px;
+  font-weight: 700;
+}
+.hidden {
+  visibility: hidden;
+}
+input[type=range] {
+  width: 160px;
+}
+.legend{
+  padding: 5px;
+}
+.color-box{
+  box-sizing: border-box;
+  display: inline-block;
+  height: 20px;
+  width: 30px;
+}
+.comment{
+  display: inline-block;
+  vertical-align: 5px;
+}
+.close{
+  position : absolute;
+  top : 10px;
+  right : 20px;
+  text-decoration: none;
+  line-height : 1;
+}
+.close::after{
+  font-size: 24px;
+  font-weight: bold;
+  content : 'x';
+}
+#color-box-blue{
+  background-color: #668de5;
+}
+#color-box-green{
+  background-color: #71e096;
+}
+#color-box-cyan{
+  background-color: #90d4f7;
+}
+#color-box-purple{
+  background-color : #c497f2;
+}
+#id-search, .btn-search{
+  display : inline-block;
+  margin : 5px;
+}
+.row{
+  display : block;
+  width : 100%;
+}
+.col-6{
+  display : inline-block;
+  width : 50%;
+  float : left;
+  margin : 10px 0px;
+}
+.col-3{
+  display : inline-block;
+  width : 25%;
+  float : left;
+  text-align : center;
+  margin : 10px 0px;
+}
+.scrollable{
+  max-height : 600px;
+  overflow : auto;
+}
+.breadcrumb{
+  position : absolute;
+  left : 15px;
+  top : 15px;
+  font-size : 14px;
+}
+.treeMapLink{
+  position : absolute;
+  left : 15px;
+  top : 30px;
+  font-size : 14px;
+}
+#treeMapModalOverLay{
+  position : absolute;
+  top : 0px;
+  bottom : 0px;
+  left : 0px;
+  right : 0px;
+  display : none;
+  background : rgba(0,0,0,0.7);
+}
+div.breadcrumb a{
+  margin : 0px 10px;
+}
+div.treeMapLink{
+  margin-top : 20px;
 }
