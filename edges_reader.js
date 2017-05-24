@@ -22,11 +22,11 @@ function edgesReader(allText){
 
         if( headers[j] == 'Sender' ){
 
-          edge['sender'] = data[j];
+          edge['source'] = data[j];
         }
         if( headers[j] == 'Receiver' ){
 
-          edge['receiver'] = data[j];
+          edge['target'] = data[j];
         }
         if( headers[j] == 'Cost' ){
 

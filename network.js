@@ -20,7 +20,7 @@ function network_show(nodes, edges){
   .enter()
   .append('line')
   .attr('stroke-width', function(d){
-    return Math.sqrt(d.value);
+    return Math.sqrt(d['value']);
   });
 
   var node = svg
@@ -32,7 +32,7 @@ function network_show(nodes, edges){
   .append('circle')
   .attr('r', 5)
   .attr('fill', function(d){
-    return color(d.color);
+    return color(d['color']);
   })
   .call(d3.drag()
   .on('start', dragstarted)
@@ -40,7 +40,7 @@ function network_show(nodes, edges){
   .on('end',dragended));
 
   node.append('title').text(function(d){
-    return d.id;
+    return d['id'];
   });
 
   simulation

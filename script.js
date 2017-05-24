@@ -18,12 +18,6 @@ $(document).ready(function(){
 				success : function(data){
 
 					project.edges = edgesReader(data);
-					project.edges.forEach(function(e){console.log('e = '+e['receiver']+' ' +e['sender']);
-						project.nodes.forEach(function(n, index){console.log('n = '+n['id']);
-							if( n['id'] == e['sender'] ) e['source'] == index;
-							if( n['id'] == e['receiver'] ) e['target'] == index;
-						});
-					});
 
 					console.log(project.edges);
 
