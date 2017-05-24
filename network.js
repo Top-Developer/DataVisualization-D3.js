@@ -34,8 +34,11 @@ function network_show(nodes, edges){
   .enter()
   .append('circle')
   .attr('r', 5)
+	.attr('id', function(d){
+		return d['id'];
+	})
   .attr('fill', function(d){
-    return color(d['color']);
+    return d['color'];
   })
   .call(d3.drag()
   .on('start', dragstarted)

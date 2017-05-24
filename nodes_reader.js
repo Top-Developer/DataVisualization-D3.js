@@ -1,10 +1,10 @@
 'use strict'
 
 var typeToColor  = {
-  'SR' : 2,
-  'PR' : 4,
-  'SP' : 6,
-  'FP' : 8
+  'SR' : '#90d4f7',
+  'PR' : '#c497f2',
+  'SP' : '#71e096',
+  'FP' : '#668de5'
 };
 
 var nodeToIndex = {};
