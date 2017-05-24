@@ -3,7 +3,7 @@ function network_show(nodes, edges){
 
 	var svg = d3.select('svg'),
   width = +svg.attr('width'),
-  height = +svg.attr('height');
+  height = +svg.attr('height');console.log(width);console.log(height);
 
 	var color = d3.scaleOrdinal(d3.schemeCategory20);
 
@@ -20,7 +20,9 @@ function network_show(nodes, edges){
   .enter()
   .append('line')
   .attr('stroke-width', function(d){
-    return Math.sqrt(d['value']);
+		var w = Math.sqrt(d['value']);
+		if ( w > 1 ) w = 1;
+    return w;
   });
 
   var node = svg

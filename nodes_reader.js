@@ -19,7 +19,7 @@ function nodesReader(allText){
 
   var lines = [];
 
-  var whole_node_count = allTextLines.length-1;console.log(whole_node_count);
+  var whole_node_count = allTextLines.length-1;
 
   for( var i = 0 ; i < whole_node_count ; i++ ){
 
