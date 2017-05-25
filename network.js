@@ -12,12 +12,6 @@ function network_show(nodes, edges){
   .force('charge', d3.forceManyBody())
   .force('center', d3.forceCenter(width / 2, height / 2));
 
-	// Define 'div' for tooltips
-	var div = d3.select("body")
-		.append("div")  // declare the tooltip div
-		.attr("class", "report")              // apply the 'tooltip' class
-		.style("opacity", 0);                  // set the opacity to nil
-
 	var link = svg
   .append('g')
   .attr('class', 'links')
@@ -26,7 +20,7 @@ function network_show(nodes, edges){
   .enter()
   .append('line')
   .attr('stroke-width', function(d){
-		var w = Math.sqrt(d['value']);
+		var w = Math.sqrt(d['cost']);
 		if ( w == 0 ) w = 0.01;
 		if ( w > 1 ) w = 1;
     return w;
@@ -52,30 +46,32 @@ function network_show(nodes, edges){
   .on('end',dragended))
 	.on('mouseover', function(d){ // Tooltip stuff here
 		d3.select(this).attr('r', 10);
-		div.transition()
+		var tooltip = d3.select('#nodeReport');
+		tooltip.style('display', 'block');
+		tooltip.transition()
 		.duration(500)
-		.style("opacity", 0);
-		div.transition()
+		.style('opacity', 0);
+		tooltip.transition()
 		.duration(200)
-		.style("opacity", .9);
-		div.html(
-			'<a class = "close" href= "#"></a>' + // The first <a> tag
+		.style('opacity', .9);
+		tooltip.html(
+			'<a class = "close" href= "javascript:closeReport();"></a>' + // The first <a> tag
 			'<h2 class="underline">cost report</h2>' +
 			'<div>' +
 				'<p>Variance = ' + d['var'] + '</p>' +
 				'<p>Excess/Idle Capacity = ' + d['ic'] + '</p>' +
 				'<div>' +
-					'<a href="javascript:window.open('+'mailto:test@example.com'+');">' +
+					'<a href="javascript:window.open(' + '\'mailto:test@example.com\'' + ');">' +
 						d['email'] +
 					'</a>' +
 				'</div>' +
 				'<div>' +
-					'<a href="javascript:consumptionInOutbound('+'in'+');">' +
+					'<a href="javascript:consumptionInOutbound(' + '1, \'' + d['id'] +'\');">' +
 						'Consumption Inbound' +
 					'</a>' +
 				'</div>' +
 				'<div>' +
-					'<a href="javascript:consumptionInOutbound('+'out'+');">' +
+					'<a href="javascript:consumptionInOutbound(' + '0, \'' + d['id'] +'\');">' +
 						'Consumption Outbound' +
 					'</a>' +
 				'</div>' +

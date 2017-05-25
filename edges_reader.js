@@ -30,7 +30,11 @@ function edgesReader(allText){
         }
         if( headers[j] == 'Cost' ){
 
-          edge['value'] = data[j];
+          edge['cost'] = data[j];
+        }
+        if( headers[j] == 'Quantity' ){
+
+          edge['quantity'] = data[j];
         }
       }
       edges.push(edge);

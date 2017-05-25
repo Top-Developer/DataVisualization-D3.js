@@ -1,9 +1,18 @@
 'use strict'
-$(document).ready(function(){
 
-	var project = {
-		selectedNodeId : ''
-	};
+var project = {
+
+	nodes : [],
+	edges : [],
+	selectedNodeId : ''
+};
+
+var infoBox = d3.select('body')
+.append('div')
+.attr('class', 'report')
+.style("opacity", 0);
+
+$(document).ready(function(){
 
 	$.ajax({
 		type : "GET",
@@ -42,9 +51,58 @@ $(document).ready(function(){
 			project.selectedNodeId = result.attr('id');
 			console.log(project.selectedNodeId);
 		}
-console.log(document.getElementById('id-search').value);
-console.log(d3.select('#' + document.getElementById('id-search').value).empty());
-		d3.select('#' + document.getElementById('id-search').value).attr('r', 20);
 	})
-
 });
+
+function closeReport(){
+	d3.select('#nodeReport')
+	.style('opacity', 0)
+	.style('display', 'none');
+}
+
+function consumptionInOutbound(inout, id){
+	var active, passive;
+	if( inout == 1){
+		active = 'Receiver = ';
+		passive = 'Sender';
+	}else if( inout == 0){
+		active = 'Sender = ';
+		passive = 'Receiver';
+	}
+	var innerHTML = '<div>' +
+										'<p>' + active + id + '</p>' +
+										'<span class = "line"></span>' +
+										'<div class = "row">' +
+											'<div class = "col-6">' + passive +'</div>' +
+											'<div class = "col-3">Cost</div>' +
+											'<div class = "col-3">Quantity</div>' +
+										'</div>' +
+										'<div class = "row scrollable">';
+	project['edges'].forEach(function(e){
+		if ( inout == 1 ){
+			if( e['target']['id'] == id ){
+				innerHTML += '<div class = "row">' +
+												'<div class = "col-6">' + e['source']['id'] + '</div>' +
+												'<div class = "col-3">' + e['cost'] + '</div>' +
+												'<div class = "col-3">' + e['quantity'] + '</div>' +
+											'</div>'
+			}
+		}else if ( inout == 0 ){
+			if( e['source']['id'] == id ){
+				innerHTML += '<div class = "row">' +
+												'<div class = "col-6">' + e['target']['id'] + '</div>' +
+												'<div class = "col-3">' + e['cost'] + '</div>' +
+												'<div class = "col-3">' + e['quantity'] + '</div>' +
+											'</div>'
+			}
+		}
+	});
+	innerHTML += '</div>';
+	infoBox
+	.html(
+		innerHTML
+	)
+	.style('top', '10px')
+	.style('left', '10px')
+	.style('opacity', 1);
+}

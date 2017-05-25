@@ -36,9 +36,11 @@ a{
   right : 5%;
   background-color: rgb(249, 247, 237);
 }
-#control-pane, .report, #node-report, #reportOnTreeMap{
-  top: 10px;
-  right: 10px;
+#control-pane{
+  top : 10px;
+  right : 10px;
+}
+.report, #node-report, #reportOnTreeMap{
   position: absolute;
   width: 240px;
   background-color: rgb(249, 247, 237);
@@ -118,6 +120,9 @@ input[type=range] {
   font-size: 24px;
   font-weight: bold;
   content : 'x';
+}
+.close:hover{
+  color : red;
 }
 #color-box-blue{
   background-color: #668de5;
