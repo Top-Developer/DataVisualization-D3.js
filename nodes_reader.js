@@ -35,11 +35,23 @@ function nodesReader(allText){
 
           node['id'] = data[j];
         }
+        if( headers[j] == 'Variance' ){
+
+          node['var'] = data[j];
+        }
+        if( headers[j] == 'Idle_Cap' ){
+
+          node['ic'] = data[j];
+        }
         if( headers[j] == 'Type' ){
 
           node['type'] = data[j];
 
           node['color'] = typeToColor[ data[j] ];
+        }
+        if( headers[j] == 'Email' ){
+
+          node['email'] = data[j];
         }
       }
       nodeToIndex[ node['id'] ] = i;

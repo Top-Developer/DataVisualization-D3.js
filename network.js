@@ -12,7 +12,13 @@ function network_show(nodes, edges){
   .force('charge', d3.forceManyBody())
   .force('center', d3.forceCenter(width / 2, height / 2));
 
-  var link = svg
+	// Define 'div' for tooltips
+	var div = d3.select("body")
+		.append("div")  // declare the tooltip div
+		.attr("class", "report")              // apply the 'tooltip' class
+		.style("opacity", 0);                  // set the opacity to nil
+
+	var link = svg
   .append('g')
   .attr('class', 'links')
   .selectAll('line')
@@ -44,8 +50,44 @@ function network_show(nodes, edges){
   .on('start', dragstarted)
   .on('drag', dragged)
   .on('end',dragended))
-	.on('mouseover', function(){
+	.on('mouseover', function(d){ // Tooltip stuff here
 		d3.select(this).attr('r', 10);
+		div.transition()
+		.duration(500)
+		.style("opacity", 0);
+		div.transition()
+		.duration(200)
+		.style("opacity", .9);
+		div.html(
+			'<a class = "close" href= "#"></a>' + // The first <a> tag
+			'<h2 class="underline">cost report</h2>' +
+			'<div>' +
+				'<p>Variance = ' + d['var'] + '</p>' +
+				'<p>Excess/Idle Capacity = ' + d['ic'] + '</p>' +
+				'<div>' +
+					'<a href="javascript:window.open('+'mailto:test@example.com'+');">' +
+						d['email'] +
+					'</a>' +
+				'</div>' +
+				'<div>' +
+					'<a href="javascript:consumptionInOutbound('+'in'+');">' +
+						'Consumption Inbound' +
+					'</a>' +
+				'</div>' +
+				'<div>' +
+					'<a href="javascript:consumptionInOutbound('+'out'+');">' +
+						'Consumption Outbound' +
+					'</a>' +
+				'</div>' +
+				'<div>' +
+					'<a href="javascript:detailedCostReport();">' +
+					'Detail Cost Report' +
+					'</a>' +
+				'</div>' +
+			'</div>'
+		)
+		.style("left", (d3.event.pageX) + "px")
+		.style("top", (d3.event.pageY) + "px");
 	})
 	.on('mouseout', function(){
 		d3.select(this).attr('r', 5);
@@ -53,28 +95,6 @@ function network_show(nodes, edges){
 
   node.append('title').text(function(d){
     return d['id'];
-  });
-
-	//append popover plugin
-
-	node.tooltip(function(d, i) {
-    var g, r, svg;
-    r = +d3.select(this).attr('r');
-    svg = d3.select(document.createElement("svg")).attr("height", 50);
-    g = svg.append("g");
-    g.append("rect").attr("width", r * 10).attr("height", 10);
-    g.append("text").text("10 times the radius of the cirlce").attr("dy", "25");
-    return {
-      type: "popover",
-      title: "It's a me, Rectangle",
-      content: svg,
-      detection: "shape",
-      placement: "fixed",
-      gravity: "right",
-      position: [d.x, d.y],
-      displacement: [r + 2, -72],
-      mousemove: false
-    };
   });
 
   simulation
