@@ -8,17 +8,42 @@
   stroke-width: 1.5px;
 }
 
-svg{
-  margin :50px 300px;
-}
 body {
   color: #333;
   font-size: 14px;
   font-family: Lato, sans-serif;
 }
+
+body > svg{
+  margin :50px 300px;
+}
+
 a{
   text-decoration: none;
 }
+
+#infoBox{
+  opacity : 0;
+}
+
+#sub-svg{
+  position: absolute;
+  top: 100px;
+  bottom: 100px;
+  right : 20%;
+  left : 20%;
+  background-color: rgb(249, 247, 237);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  max-height: 800px;
+  overflow: auto;
+  display: none;
+}
+
+svg#layer-svg{
+  margin-left: 150px;
+  margin-top: 50px;
+}
+
 #graph-container {
   top: 50px;
   bottom: 50px;
@@ -40,7 +65,7 @@ a{
   top : 10px;
   right : 10px;
 }
-.report, #node-report, #reportOnTreeMap{
+.report, #reportOnTreeMap{
   position: absolute;
   width: 240px;
   background-color: rgb(249, 247, 237);

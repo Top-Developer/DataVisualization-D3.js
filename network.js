@@ -1,9 +1,8 @@
 'use strict'
-function network_show(nodes, edges){
+function network_display(svg, nodes, edges){
 
-	var svg = d3.select('svg'),
-  width = +svg.attr('width'),
-  height = +svg.attr('height');console.log(width);console.log(height);
+  var width = +svg.attr('width');
+  var height = +svg.attr('height');console.log(width);console.log(height);
 
 	var color = d3.scaleOrdinal(d3.schemeCategory20);
 
@@ -46,7 +45,7 @@ function network_show(nodes, edges){
   .on('end',dragended))
 	.on('mouseover', function(d){ // Tooltip stuff here
 		d3.select(this).attr('r', 10);
-		var tooltip = d3.select('#nodeReport');
+		var tooltip = d3.select('#node-report');
 		tooltip.style('display', 'block');
 		tooltip.transition()
 		.duration(500)
@@ -82,8 +81,9 @@ function network_show(nodes, edges){
 				'</div>' +
 			'</div>'
 		)
-		.style("left", (d3.event.pageX) + "px")
-		.style("top", (d3.event.pageY) + "px");
+		.style("left", (d3.event.pageX + 1) + "px")
+		.style("top", (d3.event.pageY + 1) + "px");
+
 	})
 	.on('mouseout', function(){
 		d3.select(this).attr('r', 5);

@@ -3,7 +3,7 @@
 		<link rel = "stylesheet" href = "style.css" >
 	</head>
 	<body>
-		<svg width = "1200" height = "800"></svg>
+		<svg id = 'main-svg' width = "1200" height = "800"></svg>
 		<div id="control-pane" class = "report">
       <h2 class="underline">filters</h2>
       <div>
@@ -45,7 +45,14 @@
         </div>
       </div>
     </div>
-		<div id = "nodeReport" class = "report" style = "display : none;"></div>
+		<div class = 'report' id = 'infoBox'></div>
+		<div id = 'sub-svg'>
+			<a class = 'close' href="#"></a>
+			<div class = 'breadcrumb'><a href='#'>L1</a></div>
+			<div class = 'treeMapLink'><a href='#'>View As Tree Map</a></div>
+			<svg id = 'layer-svg' width='600' height='600'></svg>
+		</div>
+		<div id = 'node-report' class = 'report'></div>
 		<script type = 'text/javascript' src = 'nodes_reader.js'></script>
     <script type = 'text/javascript' src = 'edges_reader.js'></script>
 		<script type = 'text/javascript' src = 'library/jquery-2.1.1.min.js'></script>

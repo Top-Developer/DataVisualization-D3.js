@@ -18,7 +18,7 @@ function edgesReader(allText){
 
       var edge = {};
 
-      for(var j=0 ; j<headers.length ; j++){
+      for(var j = 0 ; j < headers.length ; j++){
 
         if( headers[j] == 'Sender' ){
 
@@ -30,11 +30,11 @@ function edgesReader(allText){
         }
         if( headers[j] == 'Cost' ){
 
-          edge['cost'] = data[j];
+          edge['cost'] = Math.round(data[j] * 100) / 100;
         }
         if( headers[j] == 'Quantity' ){
 
-          edge['quantity'] = data[j];
+          edge['quantity'] = Math.round(data[j] * 100) / 100;
         }
       }
       edges.push(edge);
