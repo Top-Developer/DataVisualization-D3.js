@@ -4,7 +4,8 @@ var project = {
 
 	nodes : [],
 	edges : [],
-	layers
+	layers : [],
+	layer_count : -1,
 	selectedNodeId : ''
 };
 
@@ -24,9 +25,9 @@ $(document).ready(function(){
 				dataType : "text",
 				success : function(data){
 
-					project.edges = edgesReader(data);
-
-					console.log(project.edges);
+					project.edges = edgesReader(data);console.log(project.edges);
+					project.layer_count++;
+					project.layers.push({'nodes':project.nodes, 'edges':project.edges});console.log(project.layers);
 
 					network_display(d3.select('svg#main-svg'), project.nodes, project.edges);
 				}
@@ -54,6 +55,38 @@ function closeReport(){
 	d3.select('#node-report')
 	.style('opacity', 0)
 	.style('display', 'none');
+}
+
+function closePopup(){
+	d3.select('#sub-svg')
+	.style('opacity', 0)
+	.style('display', 'none');
+	project.layer_count = 0;
+}
+
+function treeMapDisplay(data){
+
+	FusionCharts.ready(function(){
+		D3.select('#chartContainer').style('display', 'block');
+    var revenueChart = new FusionCharts({
+        "type": "column2d",
+        "renderAt": "chartContainer",
+        "width": "500",
+        "height": "300",
+        "dataFormat": "json",
+        "dataSource":  {
+          "chart": {
+            "caption": "Monthly revenue for last year",
+            "subCaption": "Harry's SuperMart",
+            "xAxisName": "Month",
+            "yAxisName": "Revenues (In USD)",
+            "theme": "fint"
+					},
+         "data":data
+			 }
+		});
+		revenueChart.render();
+	})
 }
 
 function consumptionInOutbound(inout, d){
@@ -114,13 +147,66 @@ function consumptionInOutbound(inout, d){
 	d3.select('#sub-svg')
 	.style('display', 'block')
 	.transition()
-	.duration(500)
+	.duration(200)
 	.style('opacity', 0)
 	.transition()
 	.duration(200)
 	.style('opacity', 1);
 
-	d3.selectAll('#layer-svg > *').remove();
+	d3.selectAll('svg#layer-svg > *').remove();
+	project.layer_count++;
+	project.layers.push({
+		'nodes':fNodes,
+		'edges':fEdges
+	});
+
+	if( project.layer_count == 1){
+		d3.select('#sub-svg')
+		.append('div')
+		.attr('class', 'breadcrumb')
+		.append('a')
+		.attr('href', '#')
+		.attr('index', '1')
+		.text('1')
+		.on('click', function(d){
+			d3.selectAll('svg#layer-svg > *').remove();
+			while(project.layer_count > 1){
+				project.layers.pop();
+				d3.select('[index="'+ project.layer_count +'"]').remove();
+				project.layer_count--;
+			}
+			project.layer_count = 1;
+			network_display(
+				d3.select('svg#layer-svg'),
+				project.layers[project.layer_count].nodes,
+				project.layers[project.layer_count].edges
+			);
+		});
+	}else{
+		d3.select('.breadcrumb')
+		.append('span')
+		.attr('index', project.layer_count)
+		.text('>')
+		.append('a')
+		.attr('href', '#')
+		.attr('index', project.layer_count)
+		.text(project.layer_count)
+		.on('click', function(){
+			d3.selectAll('svg#layer-svg > *').remove();
+			while( project.layer_count > +d3.select(this).attr('index') ){
+				project.layers.pop();
+				d3.select('[index="'+ project.layer_count +'"]').remove();
+				project.layer_count--;
+			}
+			project.layer_count = +d3.select(this).attr('index');
+			network_display(
+				d3.select('svg#layer-svg'),
+				project.layers[project.layer_count].nodes,
+				project.layers[project.layer_count].edges
+			);
+		});
+	}
+
 	network_display(d3.select('#layer-svg'), fNodes, fEdges);
 
 	closeReport();

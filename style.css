@@ -44,6 +44,10 @@ svg#layer-svg{
   margin-top: 50px;
 }
 
+#chartContainer{
+  display: none;
+}
+
 #graph-container {
   top: 50px;
   bottom: 50px;

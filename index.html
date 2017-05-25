@@ -47,16 +47,18 @@
     </div>
 		<div class = 'report' id = 'infoBox'></div>
 		<div id = 'sub-svg'>
-			<a class = 'close' href="#"></a>
-			<div class = 'breadcrumb'><a href='#'>L1</a></div>
-			<div class = 'treeMapLink'><a href='#'>View As Tree Map</a></div>
+			<a class = 'close' href="#" onclick = 'javascript:closePopup();'></a>
+			<div class = 'treeMapLink'><a href='#' onclick = 'javascript:treeMapDisplay();'>View As Tree Map</a></div>
 			<svg id = 'layer-svg' width='600' height='600'></svg>
 		</div>
 		<div id = 'node-report' class = 'report'></div>
+		<div id = 'chartContainer'>FusionCharts XT will load here!</div>
 		<script type = 'text/javascript' src = 'nodes_reader.js'></script>
     <script type = 'text/javascript' src = 'edges_reader.js'></script>
 		<script type = 'text/javascript' src = 'library/jquery-2.1.1.min.js'></script>
 		<script type = 'text/javascript' src = 'library/d3.min.js'></script>
+		<script type = "text/javascript" src = 'fusioncharts/fusioncharts.js'></script>
+		<script type = "text/javascript" src = 'fusioncharts/fusioncharts.powercharts.js'></script>
 		<script type = 'text/javascript' src = 'network.js'></script>
 		<script type = 'text/javascript' src = 'script.js'></script>
 	</body>
