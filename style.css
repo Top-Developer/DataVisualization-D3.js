@@ -44,8 +44,33 @@ svg#layer-svg{
   margin-top: 50px;
 }
 
+#cover{
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.75;
+}
+
+#OverLay{
+  display: none;
+  position : absolute;
+  top : 0px;
+  bottom : 0px;
+  left : 0px;
+  right : 0px;
+  background : rgba(0,0,0,0.7);
+}
+
 #chartContainer{
   display: none;
+  width: 1100px;
+  height: 700px;
+  margin: auto;
+  margin: 150px;
 }
 
 #graph-container {
@@ -57,6 +82,7 @@ svg#layer-svg{
   border : 2px solid #ccc;
   background-color: #ddd;
 }
+
 #sel-graph-container {
   position : absolute;
   top : 5%;
@@ -65,10 +91,12 @@ svg#layer-svg{
   right : 5%;
   background-color: rgb(249, 247, 237);
 }
+
 #control-pane{
   top : 10px;
   right : 10px;
 }
+
 .report, #reportOnTreeMap{
   position: absolute;
   width: 240px;
@@ -77,6 +105,7 @@ svg#layer-svg{
   max-height: 800px;
   overflow: auto;
 }
+
 #graph-report {
   position: absolute;
   top: 100px;
@@ -88,10 +117,12 @@ svg#layer-svg{
   max-height: 800px;
   overflow: auto;
 }
+
 #control-pane > div, .report > div, #node-report > div, #reportOnTreeMap>div{
   margin: 10px;
   overflow-x: auto;
 }
+
 .line {
   clear: both;
   display: block;
@@ -101,6 +132,7 @@ svg#layer-svg{
   border-bottom: 1px solid #aac789;
   background: transparent;
 }
+
 h2, h3, h4 {
   padding: 0;
   margin : 10px;
@@ -202,15 +234,7 @@ input[type=range] {
   top : 30px;
   font-size : 14px;
 }
-#treeMapModalOverLay{
-  position : absolute;
-  top : 0px;
-  bottom : 0px;
-  left : 0px;
-  right : 0px;
-  display : none;
-  background : rgba(0,0,0,0.7);
-}
+
 div.breadcrumb a{
   margin : 0px 10px;
 }

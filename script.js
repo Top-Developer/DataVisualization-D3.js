@@ -32,6 +32,18 @@ $(document).ready(function(){
 					project.layer_inout.push(-1);
 
 					network_display(d3.select('svg#main-svg'), project.nodes, project.edges);
+
+					d3.select('div#overlay')
+					.on('click', function(d){
+						d3.selectAll('div#chartContainer > *').remove();;
+						d3.select(this)
+						.style('display', 'none');
+					});
+
+					d3.select('div#chartContainer')
+					.on('click', function(d){
+						d3.event.stopPropagation();
+					})
 				}
 			});
 		}
@@ -63,10 +75,15 @@ function closePopup(){
 	d3.select('#sub-svg')
 	.style('opacity', 0)
 	.style('display', 'none');
+	d3.selectAll('div.breadcrumb')
+	.remove();
 	project.layer_count = 0;
 }
 
 function treeMapDisplay(){
+
+	d3.select('#overlay')
+	.style('display', 'block');
 
 	var sr = [], pr = [], sp  = [], fp = [], total = [];
 	total['sr'] = 0;
@@ -173,8 +190,8 @@ function treeMapDisplay(){
     var revenueChart = new FusionCharts({
 			type: 'treemap',
       renderAt: 'chartContainer',
-			width: '550',
-			height: '350',
+			width: '1100',
+			height: '700',
 			dataFormat: 'json',
 			dataSource: {
 				"chart" : {
@@ -314,7 +331,8 @@ function consumptionInOutbound(inout, d){
 			while(project.layer_count > 1){
 				project.layers.pop();
 				project.layer_inout.pop();
-				d3.select('[index="'+ project.layer_count +'"]').remove();
+				d3.select('a[index="'+ project.layer_count +'"]').remove();
+				d3.select('span[index="'+ project.layer_count +'"]').remove();
 				project.layer_count--;
 			}
 			project.layer_count = 1;
@@ -328,7 +346,8 @@ function consumptionInOutbound(inout, d){
 		d3.select('.breadcrumb')
 		.append('span')
 		.attr('index', project.layer_count)
-		.text('>')
+		.text('>');
+		d3.select('.breadcrumb')
 		.append('a')
 		.attr('href', '#')
 		.attr('index', project.layer_count)
@@ -338,7 +357,8 @@ function consumptionInOutbound(inout, d){
 			while( project.layer_count > +d3.select(this).attr('index') ){
 				project.layers.pop();
 				project.layer_inout.pop();
-				d3.select('[index="'+ project.layer_count +'"]').remove();
+				d3.select('a[index="'+ project.layer_count +'"]').remove();
+				d3.select('span[index="'+ project.layer_count +'"]').remove();
 				project.layer_count--;
 			}
 			project.layer_count = +d3.select(this).attr('index');
