@@ -37,16 +37,28 @@ $(document).ready(function(){
 					displayNetwork(d3.select('svg#main-svg'), project.nodes, project.edges);
 
 					d3.select('div#overlay')
-					.on('click', function(d){
+					.on('click', function(e){
 						d3.selectAll('div#chartContainer > *').remove();;
 						d3.select(this)
 						.style('display', 'none');
 					});
 
 					d3.select('div#chartContainer')
-					.on('click', function(d){
+					.on('click', function(e){
 						d3.event.stopPropagation();
-					})
+					});
+
+					d3.select('#business-category')
+					.on('change', function(e){
+						//if( d3.select('#business-category').node().value() == 'All categories' )
+					});
+
+					d3.select('#min-variance')
+					.on('input', function(e){
+						console.log( d3.select('#min-variance').property("value"));
+						console.log(+this.value);
+					});
+
 				}
 			});
 		}
@@ -81,7 +93,13 @@ function closePopup(){
 	.style('display', 'none');
 	d3.selectAll('div.breadcrumb')
 	.remove();
-	project.layer_count = 0;
+	while(project.layer_count > 0){
+		project.layers.pop();
+		d3.select('a[index="'+ project.layer_count +'"]').remove();
+		d3.select('span[index="'+ project.layer_count +'"]').remove();
+		project.layer_count--;
+	}
+	closeReport();
 }
 
 function treeMapDisplay(){
@@ -138,7 +156,6 @@ function consumptionInOutbound(inout, d){
 	.style('opacity', 1);
 
 	d3.selectAll('svg#layer-svg > *').remove();
-
 
 	if( project.layer_count == 1){
 		d3.select('#sub-svg')
