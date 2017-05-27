@@ -6,8 +6,7 @@ var project = {
 	edges : [],
 	layers : [],
 	layer_count : -1,
-	layer_inout : [],
-	selectedNodeId : ''
+	searchedNodeId : ''
 };
 
 $(document).ready(function(){
@@ -28,10 +27,14 @@ $(document).ready(function(){
 
 					project.edges = edgesReader(data);console.log(project.edges);
 					project.layer_count++;
-					project.layers.push({'nodes':project.nodes, 'edges':project.edges});console.log(project.layers);
-					project.layer_inout.push(-1);
+					project.layers.push({
+						'nodes': project.nodes,
+						'edges': project.edges,
+						'inout': -1,
+						'theCenterNode': null
+					});console.log(project.layers);
 
-					network_display(d3.select('svg#main-svg'), project.nodes, project.edges);
+					displayNetwork(d3.select('svg#main-svg'), project.nodes, project.edges);
 
 					d3.select('div#overlay')
 					.on('click', function(d){
@@ -55,12 +58,13 @@ $(document).ready(function(){
 
 		if( !result.empty() ){
 
-			if( project.selectedNodeId != '' ){
-				d3.select('#' + project.selectedNodeId).attr('r', 5);
+			if( project.searchedNodeId != '' ){
+
+				d3.select('#' + project.searchedNodeId).attr('r', 5);
 			}
 			result.attr('r', 20);
-			project.selectedNodeId = result.attr('id');
-			console.log(project.selectedNodeId);
+			project.searchedNodeId = result.attr('id');
+			console.log(project.searchedNodeId);
 		}
 	})
 });
@@ -197,7 +201,7 @@ function treeMapDisplay(){
 				"chart" : {
 		        "animation": "0",
 		        "hidetitle": "1",
-		        "plottooltext": "$label Sale: $$value Growth: $svalue%",
+		        "plottooltext": "$label Cost: $$value Variance: $svalue%",
 		        "spacex": "0",
 		        "spacey": "0",
 		        "horizontalpadding": "1",
@@ -247,9 +251,10 @@ function treeMapDisplay(){
 }
 
 function consumptionInOutbound(inout, d){
-	var fNodes = [], fEdges = [];
+	var fNodes = [], fEdges = [], theCenterNode = null;
 	project['nodes'].forEach(function(n){
 		if( d == n['id'] ) fNodes.push(n);
+		theCenterNode = n;
 	});
 	var active, passive;
 	if( inout == 1){
@@ -305,18 +310,16 @@ function consumptionInOutbound(inout, d){
 	.style('display', 'block')
 	.transition()
 	.duration(200)
-	.style('opacity', 0)
-	.transition()
-	.duration(200)
 	.style('opacity', 1);
 
 	d3.selectAll('svg#layer-svg > *').remove();
 	project.layer_count++;
 	project.layers.push({
-		'nodes':fNodes,
-		'edges':fEdges
+		'nodes': fNodes,
+		'edges': fEdges,
+		'inout': inout,
+		'theCenterNode': theCenterNode
 	});
-	project.layer_inout.push(inout);
 
 	if( project.layer_count == 1){
 		d3.select('#sub-svg')
@@ -336,7 +339,7 @@ function consumptionInOutbound(inout, d){
 				project.layer_count--;
 			}
 			project.layer_count = 1;
-			network_display(
+			displayNetwork(
 				d3.select('svg#layer-svg'),
 				project.layers[project.layer_count].nodes,
 				project.layers[project.layer_count].edges
@@ -361,16 +364,18 @@ function consumptionInOutbound(inout, d){
 				d3.select('span[index="'+ project.layer_count +'"]').remove();
 				project.layer_count--;
 			}
-			project.layer_count = +d3.select(this).attr('index');
-			network_display(
+
+			displayNetwork(
 				d3.select('svg#layer-svg'),
 				project.layers[project.layer_count].nodes,
 				project.layers[project.layer_count].edges
 			);
+
+			drawInfoBox()
 		});
 	}
 
-	network_display(d3.select('#layer-svg'), fNodes, fEdges);
+	displayNetwork(d3.select('#layer-svg'), fNodes, fEdges);
 
 	closeReport();
 

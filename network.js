@@ -1,5 +1,5 @@
 'use strict'
-function network_display(svg, nodes, edges){
+function displayNetwork(svg, nodes, edges){
 
   var width = +svg.attr('width');
   var height = +svg.attr('height');console.log(width);console.log(height);

@@ -1,5 +1,7 @@
 'use strict'
+
 function edgesReader(allText){
+  
   var edges = [];
 
   var allTextLines = allText.split(/\r\n|\n/);
