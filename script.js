@@ -38,7 +38,7 @@ $(document).ready(function(){
 
 					d3.select('div#overlay')
 					.on('click', function(e){
-						d3.selectAll('div#chartContainer > *').remove();;
+						d3.selectAll('div#chartContainer > *').remove();
 						d3.select(this)
 						.style('display', 'none');
 					});
@@ -50,13 +50,47 @@ $(document).ready(function(){
 
 					d3.select('#business-category')
 					.on('change', function(e){
-						//if( d3.select('#business-category').node().value() == 'All categories' )
+						if( d3.select('#business-category').node().value() == 'All categories' ){
+
+						}
+						else if( d3.select('#business-category').node().value() == 'BU01' ){
+
+						}
+						else if( d3.select('#business-category').node().value() == 'BU02' ){
+
+						}
 					});
 
 					d3.select('#min-variance')
 					.on('input', function(e){
 						console.log( d3.select('#min-variance').property("value"));
 						console.log(+this.value);
+						var t = +this.value;
+						project['nodes'].forEach(function(n){
+							if( parseInt( n['var'] ) < t ){
+								d3.selectAll( 'circle#' + n['id'] )
+								.attr('class', 'hidden');
+								n['hidden'] = true;
+							}
+							else{
+								d3.selectAll( 'circle#' + n['id'] )
+								.attr('class', '');
+								n['hidden'] = false;
+							}
+						});
+						project['edges'].forEach(function(e){
+							if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
+								d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+								.attr('class', 'hidden');
+								e['hidden'] = true;
+							}
+							else{
+								d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+								.attr('class', '');
+								e['hidden'] = false;
+							}
+
+						});
 					});
 
 				}

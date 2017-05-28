@@ -1,7 +1,7 @@
 'use strict'
 
 function edgesReader(allText){
-  
+
   var edges = [];
 
   var allTextLines = allText.split(/\r\n|\n/);
@@ -18,7 +18,9 @@ function edgesReader(allText){
 
     if( data.length == headers.length ){
 
-      var edge = {};
+      var edge = {
+        'ind': i
+      };
 
       for(var j = 0 ; j < headers.length ; j++){
 

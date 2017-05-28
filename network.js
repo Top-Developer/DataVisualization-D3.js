@@ -23,7 +23,10 @@ function displayNetwork(svg, nodes, edges){
 		if ( w == 0 ) w = 0.01;
 		if ( w > 1 ) w = 1;
     return w;
-  });
+  })
+  .attr('ind', function(d){
+		return d['ind'];
+	});
 
   var node = svg
   .append('g')
