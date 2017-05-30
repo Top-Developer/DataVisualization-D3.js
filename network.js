@@ -7,7 +7,8 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
 	var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 	var simulation = d3.forceSimulation()
-	.force('link', d3.forceLink().id(function(d){return d['id'];}))
+	.force('link', d3.forceLink().id( function(d){return d['id'];}) )
+  .force('collide',d3.forceCollide( function(d){return node_radius + 2 }) )
   .force('charge', d3.forceManyBody())
   .force('center', d3.forceCenter(width / 2, height / 2));
 
@@ -105,33 +106,6 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
 	})
   .on('dblclick', connectedNodes);
 
-  // Resolves collisions between d and all other circles.
-  function collide(alpha) {
-    var quadtree = d3.quadtree().extent([[-1, -1], [width + 1, height + 1]]).addAll(nodes);
-    return function(d) {
-      var rb = 2 * node_radius + node_padding,
-          nx1 = d.x - rb,
-          nx2 = d.x + rb,
-          ny1 = d.y - rb,
-          ny2 = d.y + rb;
-      quadtree.visit(function(quad, x1, y1, x2, y2) {console.log(quad.point);
-        if (quad.point && (quad.point !== d)) {
-          var x = d.x - quad.point.x,
-              y = d.y - quad.point.y,
-              l = Math.sqrt(x * x + y * y);
-            if (l < rb) {
-            l = (l - rb) / l * alpha;
-            d.x -= x *= l;
-            d.y -= y *= l;
-            quad.point.x += x;
-            quad.point.y += y;
-          }
-        }
-        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-      });
-    };
-  }
-
   //Toggle stores whether the highlighting is on
   var toggle = 0;
   //Create an array logging what is connected to what
@@ -193,8 +167,6 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
     node
     .attr('cx', function(d){ return d.x; })
     .attr('cy', function(d){ return d.y; });
-
-    //node.each( collide(0.5) ); //Added
 
   }
 

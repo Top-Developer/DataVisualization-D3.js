@@ -27,7 +27,9 @@ function nodesReader(allText){
 
     if( data.length == headers.length ){
 
-      var node = {};
+      var node = {
+        'img': '1.png'
+      };
 
       for(var j = 0 ; j < headers.length ; j++){
 
