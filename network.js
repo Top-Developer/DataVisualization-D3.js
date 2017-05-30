@@ -41,9 +41,9 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
 		return d['id'];
 	})
   .style('stroke', function(d){
-    if ( parseInt(d['var']) <=5 ){
-      return d['color'];
-    }else if( parseInt(d['var']) <=15 ){
+    if ( parseInt(d['var']) <= 5 ){
+      return '#ffffff';
+    }else if( parseInt(d['var']) <= 15 ){
       return '#f5a26f';
     }else{
       return  '#ff0000';
@@ -61,7 +61,12 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
   .on('end',dragended))
 	.on('mouseover', function(d){ // Tooltip stuff here
 		d3.select(this).attr('r', 1.5 * node_radius);
-		var tooltip = d3.select('#node-report');
+	})
+	.on('mouseout', function(d){
+		d3.select(this).attr('r', node_radius);
+	})
+  .on('click', function(d){
+    var tooltip = d3.select('#node-report');
 		tooltip.style('display', 'block');
 		tooltip.transition()
 		.duration(500)
@@ -99,10 +104,6 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
 		)
 		.style("left", (d3.event.pageX + 1) + "px")
 		.style("top", (d3.event.pageY + 1) + "px");
-
-	})
-	.on('mouseout', function(){
-		d3.select(this).attr('r', node_radius);
 	})
   .on('dblclick', connectedNodes);
 

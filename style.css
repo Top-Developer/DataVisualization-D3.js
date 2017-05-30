@@ -195,6 +195,7 @@ input[type=range] {
   display : inline-block;
   margin : 5px;
 }
+
 .row{
   display : block;
   width : 100%;
@@ -248,4 +249,81 @@ div.tooltip {
   background: lightsteelblue;
   border: 0px;
   border-radius: 8px;
+}
+
+#parallelogram {
+	width: 30px;
+	height: 20px;
+	-webkit-transform: skew(45deg);
+	   -moz-transform: skew(45deg);
+	     -o-transform: skew(45deg);
+	background: red;
+  margin: 0px 5px;
+  display : inline-block;
+}
+
+#chevron {
+  position: relative;
+  text-align: center;
+  margin: 0px 10px;
+  height: 20px;
+  width: 30px;
+  display : inline-block;
+}
+
+#chevron:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50%;
+  width: 100%;
+  background: red;
+  -webkit-transform: skew(45deg, 0deg);
+  -moz-transform: skew(45deg, 0deg);
+  -ms-transform: skew(45deg, 0deg);
+  -o-transform: skew(45deg, 0deg);
+  transform: skew(45deg, 0deg);
+}
+#chevron:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 50%;
+  width: 100%;
+  background: red;
+  -webkit-transform: skew(-45deg, 0deg);
+  -moz-transform: skew(-45deg, 0deg);
+  -ms-transform: skew(-45deg, 0deg);
+  -o-transform: skew(-45deg, 0deg);
+  transform: skew(-45deg, 0deg);
+}
+#hexagon {
+	width: 100px;
+	height: 55px;
+	background: red;
+	position: relative;
+}
+#hexagon:before {
+	content: "";
+	position: absolute;
+	top: -25px;
+	left: 0;
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-bottom: 25px solid red;
+}
+#hexagon:after {
+	content: "";
+	position: absolute;
+	bottom: -25px;
+	left: 0;
+	width: 0;
+	height: 0;
+	border-left: 50px solid transparent;
+	border-right: 50px solid transparent;
+	border-top: 25px solid red;
 }
