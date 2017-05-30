@@ -31,6 +31,10 @@ function nodesReader(allText){
 
       for(var j = 0 ; j < headers.length ; j++){
 
+        if( headers[j] == 'Bus.Unit' ){
+
+          node['busunit'] = data[j];
+        }
         if( headers[j] == 'Node' ){
 
           node['id'] = data[j];

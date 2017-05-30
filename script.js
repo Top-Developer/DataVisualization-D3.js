@@ -34,7 +34,7 @@ $(document).ready(function(){
 						'theCenterNode': null
 					});console.log(project.layers);
 
-					displayNetwork(d3.select('svg#main-svg'), project.nodes, project.edges);
+					displayNetwork(d3.select('svg#main-svg'), project.nodes, project.edges, 10, 2);
 
 					d3.select('div#overlay')
 					.on('click', function(e){
@@ -50,14 +50,111 @@ $(document).ready(function(){
 
 					d3.select('#business-category')
 					.on('change', function(e){
-						if( d3.select('#business-category').node().value() == 'All categories' ){
+						var sel = document.getElementById('business-category');
+						if( sel.options[sel.selectedIndex].value == 'All categories' ){
 
+							project['nodes'].forEach(function(n){
+								n['bus_filtered'] = false;
+								if ( n['var_filtered'] == true ){
+									n['hidden'] = true;
+									d3.selectAll( 'circle#' + n['id'] )
+									.attr('class', 'hidden');
+								}
+								else{
+									d3.selectAll( 'circle#' + n['id'] )
+									.attr('class', '');
+									n['hidden'] = false;
+									n['var_filtered'] = false;
+								}
+							});
+
+							project['edges'].forEach(function(e){
+								if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
+									d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+									.attr('class', 'hidden');
+									e['var_filtered'] = true;
+									e['hidden'] = true;
+								}
+								else{
+									e['var_filtered'] = false;
+									if( e['bus_filtered'] != true ){
+										e['hidden'] = false;
+										d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+										.attr('class', '');
+									}
+								}
+							});
 						}
-						else if( d3.select('#business-category').node().value() == 'BU01' ){
+						else if( sel.options[sel.selectedIndex].value == 'BU01' ){
 
+							project['nodes'].forEach(function(n){
+								console.log(n['busunit']);
+								if( n['busunit'] == 'BU01' ){
+									n['bus_filtered'] = true;
+									n['hidden'] = true;
+									d3.selectAll( 'circle#' + n['id'] )
+									.attr('class', 'hidden');
+								}else{
+									n['bus_filtered'] = false;
+									if( n['var_filtered'] != true ){
+										n['hidden'] = false;
+										d3.selectAll( 'circle#' + n['id'] )
+										.attr('class', '');
+									}
+								}
+							});
+
+							project['edges'].forEach(function(e){
+								if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
+									d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+									.attr('class', 'hidden');
+									e['var_filtered'] = true;
+									e['hidden'] = true;
+								}
+								else{
+									e['var_filtered'] = false;
+									if( e['bus_filtered'] != true ){
+										e['hidden'] = false;
+										d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+										.attr('class', '');
+									}
+								}
+							});
 						}
-						else if( d3.select('#business-category').node().value() == 'BU02' ){
+						else if( sel.options[sel.selectedIndex].value == 'BU02' ){
 
+							project['nodes'].forEach(function(n){
+								if( n['busunit'] == 'BU02' ){
+									n['bus_filtered'] = true;
+									n['hidden'] = true;
+									d3.selectAll( 'circle#' + n['id'] )
+									.attr('class', 'hidden');
+								}else{
+									n['bus_filtered'] = false;
+									if( n['var_filtered'] != true ){
+										n['hidden'] = false;
+										d3.selectAll( 'circle#' + n['id'] )
+										.attr('class', '');
+									}
+								}
+							});
+
+							project['edges'].forEach(function(e){
+								if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
+									d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+									.attr('class', 'hidden');
+									e['var_filtered'] = true;
+									e['hidden'] = true;
+								}
+								else{
+									e['var_filtered'] = false;
+									if( e['bus_filtered'] != true ){
+										e['hidden'] = false;
+										d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+										.attr('class', '');
+									}
+								}
+							});
 						}
 					});
 
@@ -70,29 +167,35 @@ $(document).ready(function(){
 							if( parseInt( n['var'] ) < t ){
 								d3.selectAll( 'circle#' + n['id'] )
 								.attr('class', 'hidden');
+								n['var_filtered'] = true;
 								n['hidden'] = true;
 							}
 							else{
-								d3.selectAll( 'circle#' + n['id'] )
-								.attr('class', '');
-								n['hidden'] = false;
+								n['var_filtered'] = false;
+								if( n['bus_filtered'] != true ){
+									n['hidden'] = false;
+									d3.selectAll( 'circle#' + n['id'] )
+									.attr('class', '');
+								}
 							}
 						});
 						project['edges'].forEach(function(e){
 							if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
 								d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
 								.attr('class', 'hidden');
+								e['var_filtered'] = true;
 								e['hidden'] = true;
 							}
 							else{
-								d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-								.attr('class', '');
-								e['hidden'] = false;
+								e['var_filtered'] = false;
+								if( e['bus_filtered'] != true ){
+									e['hidden'] = false;
+									d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+									.attr('class', '');
+								}
 							}
-
 						});
 					});
-
 				}
 			});
 		}
@@ -211,7 +314,9 @@ function consumptionInOutbound(inout, d){
 			displayNetwork(
 				d3.select('svg#layer-svg'),
 				project.layers[project.layer_count].nodes,
-				project.layers[project.layer_count].edges
+				project.layers[project.layer_count].edges,
+				10,
+				2
 			);
 		});
 	}else{
@@ -236,7 +341,9 @@ function consumptionInOutbound(inout, d){
 			displayNetwork(
 				d3.select('svg#layer-svg'),
 				project.layers[project.layer_count].nodes,
-				project.layers[project.layer_count].edges
+				project.layers[project.layer_count].edges,
+				10,
+				2
 			);
 
 			drawInfoBox()
@@ -246,7 +353,9 @@ function consumptionInOutbound(inout, d){
 	displayNetwork(
 		d3.select('svg#layer-svg'),
 		project.layers[project.layer_count].nodes,
-		project.layers[project.layer_count].edges
+		project.layers[project.layer_count].edges,
+		10,
+		2
 	);
 
 	closeReport();

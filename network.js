@@ -1,5 +1,5 @@
 'use strict'
-function displayNetwork(svg, nodes, edges){
+function displayNetwork(svg, nodes, edges, node_radius, node_padding){
 
   var width = +svg.attr('width');
   var height = +svg.attr('height');console.log(width);console.log(height);
@@ -35,10 +35,22 @@ function displayNetwork(svg, nodes, edges){
   .data(nodes)
   .enter()
   .append('circle')
-  .attr('r', 5)
+  .attr('r', node_radius)
 	.attr('id', function(d){
 		return d['id'];
 	})
+  .style('stroke', function(d){
+    if ( parseInt(d['var']) <=5 ){
+      return d['color'];
+    }else if( parseInt(d['var']) <=15 ){
+      return '#f5a26f';
+    }else{
+      return  '#ff0000';
+    }
+  })
+  .attr('stroke-width', function(d){
+    return 2;
+  })
   .attr('fill', function(d){
     return d['color'];
   })
@@ -47,7 +59,7 @@ function displayNetwork(svg, nodes, edges){
   .on('drag', dragged)
   .on('end',dragended))
 	.on('mouseover', function(d){ // Tooltip stuff here
-		d3.select(this).attr('r', 10);
+		d3.select(this).attr('r', 1.5 * node_radius);
 		var tooltip = d3.select('#node-report');
 		tooltip.style('display', 'block');
 		tooltip.transition()
@@ -63,8 +75,8 @@ function displayNetwork(svg, nodes, edges){
 				'<p>Variance = ' + d['var'] + '</p>' +
 				'<p>Excess/Idle Capacity = ' + d['ic'] + '</p>' +
 				'<div>' +
-					'<a href="javascript:window.open(' + '\'mailto:test@example.com\'' + ');">' +
 						d['email'] +
+            '<a href="javascript:window.open(' + '\'mailto:test@example.com\'' + ');">' +
 					'</a>' +
 				'</div>' +
 				'<div>' +
@@ -89,8 +101,74 @@ function displayNetwork(svg, nodes, edges){
 
 	})
 	.on('mouseout', function(){
-		d3.select(this).attr('r', 5);
-	});
+		d3.select(this).attr('r', node_radius);
+	})
+  .on('dblclick', connectedNodes);
+
+  // Resolves collisions between d and all other circles.
+  function collide(alpha) {
+    var quadtree = d3.quadtree().extent([[-1, -1], [width + 1, height + 1]]).addAll(nodes);
+    return function(d) {
+      var rb = 2 * node_radius + node_padding,
+          nx1 = d.x - rb,
+          nx2 = d.x + rb,
+          ny1 = d.y - rb,
+          ny2 = d.y + rb;
+      quadtree.visit(function(quad, x1, y1, x2, y2) {console.log(quad.point);
+        if (quad.point && (quad.point !== d)) {
+          var x = d.x - quad.point.x,
+              y = d.y - quad.point.y,
+              l = Math.sqrt(x * x + y * y);
+            if (l < rb) {
+            l = (l - rb) / l * alpha;
+            d.x -= x *= l;
+            d.y -= y *= l;
+            quad.point.x += x;
+            quad.point.y += y;
+          }
+        }
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+      });
+    };
+  }
+
+  //Toggle stores whether the highlighting is on
+  var toggle = 0;
+  //Create an array logging what is connected to what
+  var linkedByIndex = {};
+  for (var i = 0; i < nodes.length; i++) {
+      linkedByIndex[i + "," + i] = 1;
+  };
+  nodes.forEach(function (d) {
+      linkedByIndex[d.id + "," + d.id] = 1;
+  });
+  edges.forEach(function (d) {
+      linkedByIndex[d.source + "," + d.target] = 1;
+  });
+
+  //This function looks up whether a pair are neighbours
+  function neighboring(a, b) {
+      return linkedByIndex[a.id + "," + b.id];
+  }
+  function connectedNodes() {
+      if (toggle == 0) {
+          //Reduce the opacity of all but the neighbouring nodes
+          var d = d3.select(this).node().__data__;
+          node.style("opacity", function (o) {
+              return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+          });
+          link.style("opacity", function (o) {
+              return d.id==o.source | d.id==o.target ? 1 : 0.1;
+          });
+          //Reduce the op
+          toggle = 1;
+      } else {
+          //Put them back to opacity=1
+          node.style("opacity", 1);
+          link.style("opacity", 1);
+          toggle = 0;
+      }
+  }
 
   node.append('title').text(function(d){
     return d['id'];
@@ -105,6 +183,7 @@ function displayNetwork(svg, nodes, edges){
   .links(edges);
 
   function ticked(){
+
     link
     .attr('x1', function(d){ return d.source.x; })
     .attr('y1', function(d){ return d.source.y; })
@@ -114,6 +193,9 @@ function displayNetwork(svg, nodes, edges){
     node
     .attr('cx', function(d){ return d.x; })
     .attr('cy', function(d){ return d.y; });
+
+    //node.each( collide(0.5) ); //Added
+
   }
 
   function dragstarted(d){
