@@ -27,6 +27,16 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
     }
   }
 
+  //added zoom and pan functionality
+  svg
+  .call(
+    d3
+    .zoom()
+    .on("zoom", function () {
+      svg.attr("transform", d3.event.transform);
+    })
+  );
+
 	var link = svg
   .append('g')
   .attr('class', 'links')
