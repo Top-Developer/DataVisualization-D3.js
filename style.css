@@ -160,7 +160,7 @@ input[type=range] {
   height: 30px;
   width: 30px;
   border-radius: 50%;
-  margin: 0px 0px -7px 10px;
+  margin: 0px 0px -7px 5px;
 }
 .comment{
   display: inline-block;
@@ -256,25 +256,15 @@ div.tooltip {
 
 
 #parallelogram {
-	width: 0;
-	height: 0;
-	border: 20px solid transparent;
-	border-bottom: 10px solid #ccc;
-	position: relative;
-	top: -10px;
-  display: inline-block;
-  margin: 0px 0px 0px 5px;
-}
-#parallelogram:after {
-	content: '';
-	position: absolute;
-	left: -20px;
-  top: 10px;
-	width: 0;
-	height: 0;
-	border: 20px solid transparent;
-	border-top: 10px solid #ccc;
-}
+  width: 30px;
+  height: 20px;
+  -webkit-transform: skew(45deg);
+  -moz-transform: skew(45deg);
+  -o-transform: skew(45deg);
+  background-color: #ccc;
+  margin: 0px 5px 0px 10px;
+  display : inline-block;
+ }
 
 #chevron {
   position: relative;

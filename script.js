@@ -6,8 +6,24 @@ var project = {
 	edges : [],
 	layers : [],
 	layer_count : -1,
-	searchedNodeId : ''
+	searchedNodeId : '',
+	node_radius: 8
 };
+
+var custom_shapes = {
+	hexagon: function(height, width) {
+		var points = [ [width, 0], [width/2, height*.865], [-width/2, height*.865], [-width, 0],[-width/2, -height*.865],[width/2, -height*.865],[width, 0] ]
+		return d3.line()(points);
+	},
+	parallelogram: function(height, width) {
+		var points = [ [width*1.5, height*.865], [-width/2, height*.865], [-width*1.5, -height*.865], [width/2, -height*.865], [width*1.5, height*.865] ]
+		return d3.line()(points);
+	},
+	arrow: function(height, width) {
+		var points = [ [width, 0], [width/2, height*.865], [-width*1.5, height*.865], [-width, 0], [-width*1.5, -height*.865], [width/2, -height*.865], [width, 0] ]
+		return d3.line()(points);
+	}
+}
 
 $(document).ready(function(){
 
@@ -34,7 +50,7 @@ $(document).ready(function(){
 						'theCenterNode': null
 					});console.log(project.layers);
 
-					displayNetwork(d3.select('svg#main-svg'), project.nodes, project.edges, 8, 2);
+					displayNetwork(d3.select('svg#main-svg'), project.nodes, project.edges, project.node_radius, 2);
 
 					d3.select('div#overlay')
 					.on('click', function(e){
@@ -57,11 +73,11 @@ $(document).ready(function(){
 								n['bus_filtered'] = false;
 								if ( n['var_filtered'] == true ){
 									n['hidden'] = true;
-									d3.selectAll( 'circle#' + n['id'] )
+									d3.selectAll( 'path#' + n['id'] )
 									.attr('class', 'hidden');
 								}
 								else{
-									d3.selectAll( 'circle#' + n['id'] )
+									d3.selectAll( 'path#' + n['id'] )
 									.attr('class', '');
 									n['hidden'] = false;
 									n['var_filtered'] = false;
@@ -92,13 +108,13 @@ $(document).ready(function(){
 								if( n['busunit'] == 'BU01' ){
 									n['bus_filtered'] = true;
 									n['hidden'] = true;
-									d3.selectAll( 'circle#' + n['id'] )
+									d3.selectAll( 'path#' + n['id'] )
 									.attr('class', 'hidden');
 								}else{
 									n['bus_filtered'] = false;
 									if( n['var_filtered'] != true ){
 										n['hidden'] = false;
-										d3.selectAll( 'circle#' + n['id'] )
+										d3.selectAll( 'path#' + n['id'] )
 										.attr('class', '');
 									}
 								}
@@ -127,13 +143,13 @@ $(document).ready(function(){
 								if( n['busunit'] == 'BU02' ){
 									n['bus_filtered'] = true;
 									n['hidden'] = true;
-									d3.selectAll( 'circle#' + n['id'] )
+									d3.selectAll( 'path#' + n['id'] )
 									.attr('class', 'hidden');
 								}else{
 									n['bus_filtered'] = false;
 									if( n['var_filtered'] != true ){
 										n['hidden'] = false;
-										d3.selectAll( 'circle#' + n['id'] )
+										d3.selectAll( 'path#' + n['id'] )
 										.attr('class', '');
 									}
 								}
@@ -165,7 +181,7 @@ $(document).ready(function(){
 						var t = +this.value;
 						project['nodes'].forEach(function(n){
 							if( parseInt( n['var'] ) < t ){
-								d3.selectAll( 'circle#' + n['id'] )
+								d3.selectAll( 'path#' + n['id'] )
 								.attr('class', 'hidden');
 								n['var_filtered'] = true;
 								n['hidden'] = true;
@@ -174,7 +190,7 @@ $(document).ready(function(){
 								n['var_filtered'] = false;
 								if( n['bus_filtered'] != true ){
 									n['hidden'] = false;
-									d3.selectAll( 'circle#' + n['id'] )
+									d3.selectAll( 'path#' + n['id'] )
 									.attr('class', '');
 								}
 							}
@@ -209,9 +225,13 @@ $(document).ready(function(){
 
 			if( project.searchedNodeId != '' ){
 
-				d3.select('#' + project.searchedNodeId).attr('r', 5);
+				d3.select('#' + project.searchedNodeId).attr('d', function(d){
+			    return custom_shapes[d.shape](project.node_radius, project.node_radius);
+			  });
 			}
-			result.attr('r', 20);
+			result.attr('d', function(d){
+				return custom_shapes[d.shape]( 1.5 * project.node_radius, 1.5 * project.node_radius);
+			});
 			project.searchedNodeId = result.attr('id');
 			console.log(project.searchedNodeId);
 		}
@@ -315,7 +335,7 @@ function consumptionInOutbound(inout, d){
 				d3.select('svg#layer-svg'),
 				project.layers[project.layer_count].nodes,
 				project.layers[project.layer_count].edges,
-				10,
+				project.node_radius + 2,
 				2
 			);
 		});
@@ -342,7 +362,7 @@ function consumptionInOutbound(inout, d){
 				d3.select('svg#layer-svg'),
 				project.layers[project.layer_count].nodes,
 				project.layers[project.layer_count].edges,
-				10,
+				project.node_radius + 2,
 				2
 			);
 

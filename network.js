@@ -12,21 +12,6 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
   .force('charge', d3.forceManyBody())
   .force('center', d3.forceCenter(width / 2, height / 2));
 
-  var custom_shapes = {
-    hexagon: function(height, width) {
-      var points = [ [width, 0], [width/2, height*.865], [-width/2, height*.865], [-width, 0],[-width/2, -height*.865],[width/2, -height*.865],[width, 0] ]
-      return d3.line()(points);
-    },
-    parallelogram: function(height, width) {
-      var points = [ [width*1.25, 0], [0, height*.8], [-width*1.25, 0], [0, -height*.8], [width*1.25, 0] ]
-      return d3.line()(points);
-    },
-    arrow: function(height, width) {
-      var points = [ [width, 0], [width/2, height/2], [-width*1.5, height/2], [-width, 0], [-width*1.5, -height/2], [width/2, -height/2], [width, 0] ]
-      return d3.line()(points);
-    }
-  }
-
 	var link = svg
   .append('g')
   .attr('class', 'links')
@@ -104,8 +89,8 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
 				'<p>Variance = ' + d['var'] + '</p>' +
 				'<p>Excess/Idle Capacity = ' + d['ic'] + '</p>' +
 				'<div>' +
-						d['email'] +
-            '<a href="javascript:window.open(' + '\'mailto:test@example.com\'' + ');">' +
+          '<a href="javascript:window.open(' + '\'mailto:test@example.com\'' + ');">' +
+          d['email'] +
 					'</a>' +
 				'</div>' +
 				'<div>' +
