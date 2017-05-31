@@ -13,29 +13,19 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
   .force('center', d3.forceCenter(width / 2, height / 2));
 
   var custom_shapes = {
+    hexagon: function(height, width) {
+      var points = [ [width, 0], [width/2, height*.865], [-width/2, height*.865], [-width, 0],[-width/2, -height*.865],[width/2, -height*.865],[width, 0] ]
+      return d3.line()(points);
+    },
     parallelogram: function(height, width) {
-      var points = [ [0,height/2], [width*.2,0], [width*.8,0], [width,height/2],[width*.8,height],[width*.2,height],[0,height/2] ]
+      var points = [ [width * 1.5, height], [-width/2, height], [-width*1.5, -height], [width/2, -height], [width * 1.5, height] ]
       return d3.line()(points);
     },
     arrow: function(height, width) {
-      var points = [ [0,height], [width*.2,0], [width,0], [width*.8,height], [0,height] ]
-      return d3.line()(points);
-    },
-    hexagon: function(height, width) {
-      var points = [ [0,height], [width*.2,0], [width,0], [width*.8,height], [0,height] ]
+      var points = [ [width*1.25, 0], [width*0.75, height], [-width*1.25, height], [-width*.75,0], [-width*1.25, -height], [width*0.75, -height], [width*1.25, 0] ]
       return d3.line()(points);
     }
   }
-
-  //added zoom and pan functionality
-  svg
-  .call(
-    d3
-    .zoom()
-    .on("zoom", function () {
-      svg.attr("transform", d3.event.transform);
-    })
-  );
 
 	var link = svg
   .append('g')
