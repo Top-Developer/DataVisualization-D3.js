@@ -257,7 +257,7 @@ div.tooltip {
 	-webkit-transform: skew(45deg);
 	   -moz-transform: skew(45deg);
 	     -o-transform: skew(45deg);
-	background: red;
+	background-color: #e2e2e2;
   margin: 0px 10px;
   display : inline-block;
 }
@@ -278,7 +278,7 @@ div.tooltip {
   left: 0;
   height: 50%;
   width: 100%;
-  background: red;
+  background-color: #e2e2e2;
   -webkit-transform: skew(45deg, 0deg);
   -moz-transform: skew(45deg, 0deg);
   -ms-transform: skew(45deg, 0deg);
@@ -292,7 +292,7 @@ div.tooltip {
   left: 0;
   height: 50%;
   width: 100%;
-  background: red;
+  background-color: #e2e2e2;
   -webkit-transform: skew(-45deg, 0deg);
   -moz-transform: skew(-45deg, 0deg);
   -ms-transform: skew(-45deg, 0deg);
@@ -302,7 +302,7 @@ div.tooltip {
 #hexagon {
 	width: 28px;
 	height: 14px;
-	background: red;
+	background-color: #e2e2e2;
 	position: relative;
   display: inline-block;
   margin: 0px 10px;
@@ -316,7 +316,7 @@ div.tooltip {
 	height: 0;
 	border-left: 14px solid transparent;
 	border-right: 14px solid transparent;
-	border-bottom: 7px solid red;
+	border-bottom: 7px solid #e2e2e2;
 }
 #hexagon:after {
 	content: "";
@@ -327,5 +327,5 @@ div.tooltip {
 	height: 0;
 	border-left: 14px solid transparent;
 	border-right: 14px solid transparent;
-	border-top: 7px solid red;
+	border-top: 7px solid #e2e2e2;
 }

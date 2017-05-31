@@ -18,11 +18,11 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
       return d3.line()(points);
     },
     parallelogram: function(height, width) {
-      var points = [ [width * 1.5, height], [-width/2, height], [-width*1.5, -height], [width/2, -height], [width * 1.5, height] ]
+      var points = [ [width*1.25, 0], [0, height*.8], [-width*1.25, 0], [0, -height*.8], [width*1.25, 0] ]
       return d3.line()(points);
     },
     arrow: function(height, width) {
-      var points = [ [width*1.25, 0], [width*0.75, height], [-width*1.25, height], [-width*.75,0], [-width*1.25, -height], [width*0.75, -height], [width*1.25, 0] ]
+      var points = [ [width, 0], [width/2, height/2], [-width*1.5, height/2], [-width, 0], [-width*1.5, -height/2], [width/2, -height/2], [width, 0] ]
       return d3.line()(points);
     }
   }
@@ -61,7 +61,7 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
     if ( parseInt(d['var']) <= 5 ){
       return '#ffffff';
     }else if( parseInt(d['var']) <= 15 ){
-      return '#f5a26f';
+      return '#ec8140';
     }else{
       return  '#ff0000';
     }
@@ -146,26 +146,29 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
 
   //This function looks up whether a pair are neighbours
   function neighboring(a, b) {
-      return linkedByIndex[a.id + "," + b.id];
+    return linkedByIndex[a.id + "," + b.id];
   }
   function connectedNodes() {
-      if (toggle == 0) {
-          //Reduce the opacity of all but the neighbouring nodes
-          var d = d3.select(this).node().__data__;
-          node.style("opacity", function (o) {
-              return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
-          });
-          link.style("opacity", function (o) {
-              return d.id==o.source | d.id==o.target ? 1 : 0.1;
-          });
-          //Reduce the op
-          toggle = 1;
-      } else {
-          //Put them back to opacity=1
-          node.style("opacity", 1);
-          link.style("opacity", 1);
-          toggle = 0;
-      }
+    d3.select('#node-report')
+  	.style('opacity', 0)
+  	.style('display', 'none');
+    if (toggle == 0) {
+        //Reduce the opacity of all but the neighbouring nodes
+        var d = d3.select(this).node().__data__;
+        node.style("opacity", function (o) {
+            return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+        });
+        link.style("opacity", function (o) {
+            return d.id==o.source | d.id==o.target ? 1 : 0.1;
+        });
+        //Reduce the op
+        toggle = 1;
+    } else {
+        //Put them back to opacity=1
+        node.style("opacity", 1);
+        link.style("opacity", 1);
+        toggle = 0;
+    }
   }
 
   node.append('title').text(function(d){

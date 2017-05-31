@@ -2,8 +2,8 @@
 
 var typeToColor  = {
   'SR' : '#90d4f7',
-  'PR' : '#c497f2',
-  'SP' : '#71e096',
+  'PR' : '#882ce4',
+  'SP' : '#a8ecbe',
   'FP' : '#668de5'
 };
 

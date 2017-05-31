@@ -34,7 +34,7 @@ $(document).ready(function(){
 						'theCenterNode': null
 					});console.log(project.layers);
 
-					displayNetwork(d3.select('svg#main-svg'), project.nodes, project.edges, 7, 2);
+					displayNetwork(d3.select('svg#main-svg'), project.nodes, project.edges, 8, 2);
 
 					d3.select('div#overlay')
 					.on('click', function(e){
