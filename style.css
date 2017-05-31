@@ -258,7 +258,7 @@ div.tooltip {
 	   -moz-transform: skew(45deg);
 	     -o-transform: skew(45deg);
 	background: red;
-  margin: 0px 5px;
+  margin: 0px 10px;
   display : inline-block;
 }
 
@@ -300,30 +300,32 @@ div.tooltip {
   transform: skew(-45deg, 0deg);
 }
 #hexagon {
-	width: 100px;
-	height: 55px;
+	width: 28px;
+	height: 14px;
 	background: red;
 	position: relative;
+  display: inline-block;
+  margin: 0px 10px;
 }
 #hexagon:before {
 	content: "";
 	position: absolute;
-	top: -25px;
+	top: -7px;
 	left: 0;
 	width: 0;
 	height: 0;
-	border-left: 50px solid transparent;
-	border-right: 50px solid transparent;
-	border-bottom: 25px solid red;
+	border-left: 14px solid transparent;
+	border-right: 14px solid transparent;
+	border-bottom: 7px solid red;
 }
 #hexagon:after {
 	content: "";
 	position: absolute;
-	bottom: -25px;
+	bottom: -7px;
 	left: 0;
 	width: 0;
 	height: 0;
-	border-left: 50px solid transparent;
-	border-right: 50px solid transparent;
-	border-top: 25px solid red;
+	border-left: 14px solid transparent;
+	border-right: 14px solid transparent;
+	border-top: 7px solid red;
 }

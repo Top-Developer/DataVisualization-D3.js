@@ -28,7 +28,9 @@ function nodesReader(allText){
     if( data.length == headers.length ){
 
       var node = {
-        'img': '1.png'
+        'img': '1.png',
+        x: 0,
+        y: 0
       };
 
       for(var j = 0 ; j < headers.length ; j++){
@@ -40,6 +42,16 @@ function nodesReader(allText){
         if( headers[j] == 'Node' ){
 
           node['id'] = data[j];
+
+          if( data[j].substring(0,2) == 'RP' ){
+            node['shape'] = 'parallelogram';
+          }
+          else if( data[j].substring(0,2) == 'BP' ){
+            node['shape'] = 'arrow';
+          }
+          else if( data[j].substring(0,2) == 'SF' || data[j].substring(0,2) == 'FP' ){
+            node['shape'] = 'hexagon';
+          }
         }
         if( headers[j] == 'Variance' ){
 

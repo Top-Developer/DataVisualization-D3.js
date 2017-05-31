@@ -12,6 +12,21 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
   .force('charge', d3.forceManyBody())
   .force('center', d3.forceCenter(width / 2, height / 2));
 
+  var custom_shapes = {
+    parallelogram: function(height, width) {
+      var points = [ [0,height/2], [width*.2,0], [width*.8,0], [width,height/2],[width*.8,height],[width*.2,height],[0,height/2] ]
+      return d3.line()(points);
+    },
+    arrow: function(height, width) {
+      var points = [ [0,height], [width*.2,0], [width,0], [width*.8,height], [0,height] ]
+      return d3.line()(points);
+    },
+    hexagon: function(height, width) {
+      var points = [ [0,height], [width*.2,0], [width,0], [width*.8,height], [0,height] ]
+      return d3.line()(points);
+    }
+  }
+
 	var link = svg
   .append('g')
   .attr('class', 'links')
@@ -32,11 +47,13 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
   var node = svg
   .append('g')
   .attr('class', 'nodes')
-  .selectAll('circle')
+  .selectAll('path')
   .data(nodes)
   .enter()
-  .append('circle')
-  .attr('r', node_radius)
+  .append('path')
+  .attr('d', function(d){
+    return custom_shapes[d.shape](node_radius, node_radius);
+  })
 	.attr('id', function(d){
 		return d['id'];
 	})
@@ -55,15 +72,21 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
   .attr('fill', function(d){
     return d['color'];
   })
-  .call(d3.drag()
-  .on('start', dragstarted)
-  .on('drag', dragged)
-  .on('end',dragended))
+  .call(
+    d3.drag()
+      .on('start', dragstarted)
+      .on('drag', dragged)
+      .on('end',dragended)
+  )
 	.on('mouseover', function(d){ // Tooltip stuff here
-		d3.select(this).attr('r', 1.5 * node_radius);
+		d3.select(this).attr('d', function(d){
+      return custom_shapes[d.shape](1.5 * node_radius, 1.5 * node_radius);
+    });
 	})
 	.on('mouseout', function(d){
-		d3.select(this).attr('r', node_radius);
+		d3.select(this).attr('d', function(d){
+      return custom_shapes[d.shape](node_radius, node_radius);
+    });
 	})
   .on('click', function(d){
     var tooltip = d3.select('#node-report');
@@ -166,9 +189,7 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
     .attr('y2', function(d){ return d.target.y; });
 
     node
-    .attr('cx', function(d){ return d.x; })
-    .attr('cy', function(d){ return d.y; });
-
+    .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
   }
 
   function dragstarted(d){
