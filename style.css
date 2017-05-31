@@ -160,12 +160,13 @@ input[type=range] {
   height: 30px;
   width: 30px;
   border-radius: 50%;
-  margin: 0px 10px -5px 10px;
+  margin: 0px 0px -7px 10px;
 }
 .comment{
   display: inline-block;
   vertical-align: 5px;
 }
+
 .close{
   position : absolute;
   top : 7px;
@@ -262,7 +263,7 @@ div.tooltip {
 	position: relative;
 	top: -10px;
   display: inline-block;
-  margin: 0px 5px;
+  margin: 0px 0px 0px 5px;
 }
 #parallelogram:after {
 	content: '';
@@ -278,7 +279,7 @@ div.tooltip {
 #chevron {
   position: relative;
   text-align: center;
-  margin: 0px 10px;
+  margin: 0px 5px 0px 10px;
   height: 20px;
   width: 30px;
   display : inline-block;
@@ -318,7 +319,7 @@ div.tooltip {
 	background-color: #ccc;
 	position: relative;
   display: inline-block;
-  margin: 0px 10px;
+  margin: 0px 5px 0px 10px;
 }
 #hexagon:before {
 	content: "";
