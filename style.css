@@ -157,8 +157,10 @@ input[type=range] {
 .color-box{
   box-sizing: border-box;
   display: inline-block;
-  height: 20px;
+  height: 30px;
   width: 30px;
+  border-radius: 50%;
+  margin: 0px 10px -5px 10px;
 }
 .comment{
   display: inline-block;
