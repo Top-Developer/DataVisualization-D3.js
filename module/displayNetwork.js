@@ -1,5 +1,41 @@
 'use strict'
-function displayNetwork(svg, nodes, edges, node_radius, node_padding){
+
+var custom_shapes = {
+	hexagon: function(height, width) {
+		var points = [ [width, 0], [width/2, height*.865], [-width/2, height*.865], [-width, 0],[-width/2, -height*.865],[width/2, -height*.865],[width, 0] ]
+		return d3.line()(points);
+	},
+	parallelogram: function(height, width) {
+		var points = [ [width*1.5, height*.865], [-width/2, height*.865], [-width*1.5, -height*.865], [width/2, -height*.865], [width*1.5, height*.865] ]
+		return d3.line()(points);
+	},
+	arrow: function(height, width) {
+		var points = [ [width, 0], [width/2, height*.865], [-width*1.5, height*.865], [-width, 0], [-width*1.5, -height*.865], [width/2, -height*.865], [width, 0] ]
+		return d3.line()(points);
+	}
+}
+
+function objCopy(obj){
+
+	if ( null == obj || 'object' != typeof obj ) return obj;
+	var copy = obj.constructor();
+	for (var attr in obj){
+		if( obj.hasOwnProperty(attr) ) copy[attr] = obj[attr];
+	}
+	return copy;
+}
+
+function displayNetwork(svg, net_nodes, net_edges, node_radius, node_padding){
+
+  var nodes = [], edges = [];
+
+  net_nodes.forEach(function(n){
+    nodes.push(objCopy(n));
+  });
+
+  net_edges.forEach(function(e){
+    edges.push(objCopy(e));
+  });
 
   var width = +svg.attr('width');
   var height = +svg.attr('height');console.log(width);console.log(height);
@@ -8,7 +44,7 @@ function displayNetwork(svg, nodes, edges, node_radius, node_padding){
 
 	var simulation = d3.forceSimulation()
 	.force('link', d3.forceLink().id( function(d){return d['id'];}) )
-  .force('collide',d3.forceCollide( function(d){return node_radius + 2 }) )
+  .force('collide',d3.forceCollide( function(d){return node_radius + 2; }) )
   .force('charge', d3.forceManyBody())
   .force('center', d3.forceCenter(width / 2, height / 2));
 

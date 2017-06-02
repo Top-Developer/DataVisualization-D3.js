@@ -1,4 +1,6 @@
-var layer ={
+'use strict'
+
+var layer = {
 	theCenterNode: {},
 	inout: -1,
 	nodes: [],
@@ -28,11 +30,11 @@ function refreshInfoBox(layer){
 	layer['edges'].forEach(function(e){
 		if ( layer['inout'] == 1 ){
       innerHTML += '<div class = "row">' +
-                      '<div class = "col-6">' + e['source']['id'] + '</div>';
+                      '<div class = "col-6">' + e['source'] + '</div>';
 		}
     else if ( layer['inout'] == 0 ){
       innerHTML += '<div class = "row">' +
-                      '<div class = "col-6">' + e['target']['id'] + '</div>';
+                      '<div class = "col-6">' + e['target'] + '</div>';
     }
     innerHTML += '<div class = "col-3">' + e['cost'] + '</div>' +
                   '<div class = "col-3">' + e['quantity'] + '</div>' +
