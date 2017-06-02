@@ -1,5 +1,20 @@
 'use strict'
 
+var custom_shapes = {
+	hexagon: function(height, width) {
+		var points = [ [width, 0], [width/2, height*.865], [-width/2, height*.865], [-width, 0],[-width/2, -height*.865],[width/2, -height*.865],[width, 0] ]
+		return d3.line()(points);
+	},
+	parallelogram: function(height, width) {
+		var points = [ [width*1.5, height*.865], [-width/2, height*.865], [-width*1.5, -height*.865], [width/2, -height*.865], [width*1.5, height*.865] ]
+		return d3.line()(points);
+	},
+	arrow: function(height, width) {
+		var points = [ [width, 0], [width/2, height*.865], [-width*1.5, height*.865], [-width, 0], [-width*1.5, -height*.865], [width/2, -height*.865], [width, 0] ]
+		return d3.line()(points);
+	}
+}
+
 function generateHierarchy(theNodes){
 
 	var sr = {
@@ -26,15 +41,19 @@ function generateHierarchy(theNodes){
 
 	theNodes.forEach(function(n){
 		if ( n['Type'] == 'SR' ){
+			n['Color'] = '#90d4f7';
 			sr['children'].push(n);
 		}
 		else if ( n['Type'] == 'PR' ){
+			n['Color'] = '#882ce4';
 			pr['children'].push(n);
 		}
 		else if ( n['Type'] == 'SP' ){
+			n['Color'] = '#a8ecbe';
 			sp['children'].push(n);
 		}
 		else if ( n['Type'] == 'FP' ){
+			n['Color'] = '#668de5';
 			fp['children'].push(n);
 		};
 	});
@@ -68,8 +87,30 @@ function drawBasicLayer(theProject, svg){
 			return "translate(" + d.x + "," + d.y + ")";
 		});
 
-	node.append('circle')
-		.attr('r', function(d){ return d.r; })
+	node.append('path')
+	  .attr('d', function(d){
+			if( d['data']['Shape'] ){
+				return custom_shapes[d.data.Shape](d.r, d.r);
+			}
+			else {
+
+			}
+	  })
+		.attr('stroke',function(d){
+			if ( parseInt(d['data']['Variance']) <= 5 ){
+	      return '#ffffff';
+	    }else if( parseInt(d['data']['Variance']) <= 15 ){
+	      return '#ec8140';
+	    }else{
+	      return  '#ff0000';
+	    }
+		})
+		.attr('stroke-width', function(d){
+	    return 2;
+	  })
+		.attr('fill', function(d){
+	    return d['data']['Color'];
+	  });
 
 
 

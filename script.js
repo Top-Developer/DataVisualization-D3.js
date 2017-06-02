@@ -17,7 +17,19 @@ $(document).ready(function(){
 		dataType : "text",
 		success : function(data){
 
-			project.nodes = d3.csvParse(data);console.log(project.nodes)
+			project.nodes = d3.csvParse(data);
+
+      project.nodes.forEach(function(n){
+        if( n['Node'].substring(0,2) == 'RP' ){
+          n['Shape'] = 'parallelogram';
+        }
+        else if( n['Node'].substring(0,2) == 'BP' ){
+          n['Shape'] = 'arrow';
+        }
+        else if( n['Node'].substring(0,2) == 'SF' || n['Node'].substring(0,2) == 'FP' ){
+          n['Shape'] = 'hexagon';
+        }
+      });
 
 			$.ajax({
 				type : "GET",
