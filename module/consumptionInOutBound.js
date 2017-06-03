@@ -26,7 +26,7 @@ function consumptionInOutbound(inout, d){
 	var fNodes = [], fEdges = [], theCenterNode = null;
 
 	project['nodes'].forEach(function(n){
-		if( d == n['id'] ) {
+		if( d == n['Node'] ) {
 			fNodes.push(n);
 			theCenterNode = n;
 		}
@@ -34,17 +34,17 @@ function consumptionInOutbound(inout, d){
 
 	project['edges'].forEach(function(e){
 		if( inout == 1 ){
-			if( e['target'] == d ){
+			if( e['Receiver'] == d ){
 				fEdges.push(e);
 				project['nodes'].forEach(function(n){
-					if( e['source'] == n['id'] ) fNodes.push(n);
+					if( e['Sender'] == n['Node'] ) fNodes.push(n);
 				});
 			}
 		}else if( inout == 0 ){
-			if( e['source'] == d ){
+			if( e['Sender'] == d ){
 				fEdges.push(e);
 				project['nodes'].forEach(function(n){
-					if( e['target'] == n['id'] ) fNodes.push(n);
+					if( e['Receiver'] == n['Node'] ) fNodes.push(n);
 				});
 			}
 		}
@@ -93,7 +93,8 @@ function consumptionInOutbound(inout, d){
 				2
 			);
 		});
-	}else{
+	}
+	else{
 		d3.select('.breadcrumb')
 		.append('span')
 		.attr('index', project.layer_count)
@@ -132,7 +133,6 @@ function consumptionInOutbound(inout, d){
 	// 	2
 	// );
 
-  circularLayout(d3.select('svg#layer-svg'), project.layers[project.layer_count]);
 	closeReport();
-
+	circularLayout(d3.select('svg#layer-svg'), project.layers[project.layer_count]);
 }

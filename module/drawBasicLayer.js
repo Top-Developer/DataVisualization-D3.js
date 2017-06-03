@@ -1,23 +1,5 @@
 'use strict'
 
-var custom_shapes = {
-	hexagon: function(radius) {
-		var width = radius * 0.8, height = radius * 0.8;
-		var points = [ [width, 0], [width/2, height*.865], [-width/2, height*.865], [-width, 0],[-width/2, -height*.865],[width/2, -height*.865],[width, 0] ]
-		return d3.line()(points);
-	},
-	parallelogram: function(radius) {
-		var width = radius, height = radius;
-		var points = [ [width*.916, height*.4], [-width*.175, height*.4], [-width*.916, -height*.4], [width*.175, -height*.4], [width*.916, height*.4] ]
-		return d3.line()(points);
-	},
-	arrow: function(radius) {
-		var width = radius * 0.6, height = radius * 0.6;
-		var points = [ [width, 0], [width/2, height*.865], [-width*1.5, height*.865], [-width, 0], [-width*1.5, -height*.865], [width/2, -height*.865], [width, 0] ]
-		return d3.line()(points);
-	}
-}
-
 function generateHierarchy(theNodes){
 
 	var sr = {
@@ -183,12 +165,12 @@ function drawBasicLayer(theProject, svg){
 						'</a>' +
 					'</div>' +
 					'<div>' +
-						'<a href="javascript:consumptionInOutbound(' + '1, \'' + d['data']['id'] +'\');">' +
+						'<a href="javascript:consumptionInOutbound(' + '1, \'' + d['data']['Node'] +'\');">' +
 							'Consumption Inbound' +
 						'</a>' +
 					'</div>' +
 					'<div>' +
-						'<a href="javascript:consumptionInOutbound(' + '0, \'' + d['data']['id'] +'\');">' +
+						'<a href="javascript:consumptionInOutbound(' + '0, \'' + d['data']['Node'] +'\');">' +
 							'Consumption Outbound' +
 						'</a>' +
 					'</div>' +
@@ -222,9 +204,4 @@ function drawBasicLayer(theProject, svg){
 		.append('title').text(function(d){
 	    return (d['data']['name']) ? d['data']['name'] : d['data']['Node'];
 	  });
-
-
-
-
-
 }
