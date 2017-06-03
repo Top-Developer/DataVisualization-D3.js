@@ -14,8 +14,27 @@ function circularLayout(svg, layer){
     }
   });console.log(nodeToOrder);
 
+  svg.on('click', function(){
+    svg.selectAll('path.node')
+      .style('opacity', 1);
+
+    svg.selectAll('line.edge')
+      .style('stroke', function(d){
+        if( layer['inout'] == 1 ){
+          return '#00f';
+        }
+        else if( layer['inout'] == 0 ){
+          return '#f00';
+        }
+      })
+      .style('opacity', 1);
+
+    closeReport();
+  });
+
   var g = svg.append('g')
     .attr('class', 'nodes');
+
 
   var node = g.selectAll('path.node')
     .data(layer['nodes'])
@@ -99,7 +118,10 @@ function circularLayout(svg, layer){
         }
       })
   		.style('stroke-width', 2)
-  		.style('opacity', 1);
+  		.style('opacity', 1)
+      .on('click', function(){
+        d3.event.stopPropagation();
+      });
 
     node.on('mouseover', function(d){
   			d3.select(this).attr('d', function(d){
@@ -113,7 +135,9 @@ function circularLayout(svg, layer){
   		})
   		.on('click', function(d){
 
-  			svg.selectAll('line')
+        d3.event.stopPropagation();
+
+  			svg.selectAll('line.edge')
   				.style('opacity', 0);
 
   			svg.selectAll('path.node')

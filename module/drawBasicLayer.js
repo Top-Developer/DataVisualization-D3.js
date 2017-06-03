@@ -51,8 +51,7 @@ function drawBasicLayer(theProject, svg){
 	var hierarchy = generateHierarchy(theProject['nodes']);
 	hierarchy.sum(function(n){
 		return 1;
-	})
-	.sort(function(a, b) { return b.value - a.value; });
+	}).sort(function(a, b) { return b.value - a.value; });
 
 	console.log(hierarchy);
 
@@ -60,6 +59,18 @@ function drawBasicLayer(theProject, svg){
 	var height = +svg.attr('height');console.log(height);
 	var packLayer = d3.pack()
 	 	.size( [width, height] );
+
+	svg.on('click', function(){
+
+		closeReport();
+
+		svg.selectAll('path.node')
+			.style('opacity', 1);
+
+		svg.selectAll('line.edge')
+			.style('stroke', '#000')
+			.style('opacity', 0);
+	});
 
 	var g = svg.append('g')
 		.attr('class', 'nodes');
@@ -135,6 +146,8 @@ function drawBasicLayer(theProject, svg){
 	    });
 		})
 		.on('click', function(d){
+
+			d3.event.stopPropagation();
 
 			svg.selectAll('line')
 				.style('opacity', 0);

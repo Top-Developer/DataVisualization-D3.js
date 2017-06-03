@@ -1,5 +1,13 @@
 'use strict'
 
+var project = {
+
+	nodes : [],
+	edges : [],
+	layers : [],
+	layer_count : -1
+};
+
 function addEventListeners(){
 
   d3.select('div#overlay')
@@ -164,7 +172,13 @@ function addEventListeners(){
 
   d3.select('.btn-search').on('click', function(d){
 
-		var result = d3.select('#' + document.getElementById('id-search').value);
+    if( document.getElementById('id-search').value != '' ){
+
+    }
+
+
+
+    var result = d3.select('#' + document.getElementById('id-search').value);
 
 		if( !result.empty() ){
 

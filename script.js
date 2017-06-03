@@ -1,14 +1,5 @@
 'use strict'
 
-var project = {
-
-	nodes : [],
-	edges : [],
-	layers : [],
-	layer_count : -1,
-	searchedNodeId : ''
-};
-
 $(document).ready(function(){
 
 	$.ajax({
@@ -53,6 +44,15 @@ $(document).ready(function(){
             .attr('height', diameter);
 
           drawBasicLayer(project, main_svg);
+
+					project.layer_count = 0;
+					project.layers[project.layer_count] = {
+						nodes: project.nodes,
+						edges: project.edges,
+						inout: -1,
+						theCenterNode: null,
+						searchedNodeId: null
+					};
 
           addEventListeners();
 

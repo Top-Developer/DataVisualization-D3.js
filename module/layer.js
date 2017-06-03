@@ -4,7 +4,8 @@ var layer = {
 	theCenterNode: {},
 	inout: -1,
 	nodes: [],
-	edges: []
+	edges: [],
+	searchedNodeId: ''
 }
 
 var custom_shapes = {

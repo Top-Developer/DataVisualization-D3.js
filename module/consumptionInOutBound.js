@@ -51,12 +51,12 @@ function consumptionInOutbound(inout, d){
 	})
 
 	project.layer_count++;
-	project.layers.push({
+	project.layers[project.layer_count] = {
 		'nodes': fNodes,
 		'edges': fEdges,
 		'inout': inout,
 		'theCenterNode': theCenterNode
-	});console.log(project.layers[project.layer_count]);
+	};console.log(project.layers[project.layer_count]);
 
 	refreshInfoBox(project.layers[project.layer_count]);
 
