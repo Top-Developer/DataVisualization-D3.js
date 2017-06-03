@@ -85,13 +85,11 @@ function consumptionInOutbound(inout, d){
 				project.layer_count--;
 			}
 			project.layer_count = 1;
-			displayNetwork(
+			circularLayout(
 				d3.select('svg#layer-svg'),
-				project.layers[project.layer_count].nodes,
-				project.layers[project.layer_count].edges,
-				project.node_radius + 2,
-				2
+				project.layers[project.layer_count]
 			);
+			refreshInfoBox(project.layers[project.layer_count]);
 		});
 	}
 	else{
@@ -113,15 +111,11 @@ function consumptionInOutbound(inout, d){
 				project.layer_count--;
 			}
 
-			displayNetwork(
+			circularLayout(
 				d3.select('svg#layer-svg'),
-				project.layers[project.layer_count].nodes,
-				project.layers[project.layer_count].edges,
-				project.node_radius + 2,
-				2
+				project.layers[project.layer_count]
 			);
-
-			drawInfoBox()
+			refreshInfoBox(project.layers[project.layer_count]);
 		});
 	}
 

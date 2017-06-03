@@ -1,3 +1,5 @@
+'use strict'
+
 function circularLayout(svg, layer){
 
   var count = layer['edges'].length;
@@ -34,7 +36,6 @@ function circularLayout(svg, layer){
 
   var g = svg.append('g')
     .attr('class', 'nodes');
-
 
   var node = g.selectAll('path.node')
     .data(layer['nodes'])

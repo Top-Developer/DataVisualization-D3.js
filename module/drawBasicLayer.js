@@ -149,7 +149,7 @@ function drawBasicLayer(theProject, svg){
 
 			d3.event.stopPropagation();
 
-			svg.selectAll('line')
+			svg.selectAll('line.edge')
 				.style('opacity', 0);
 
 			svg.selectAll('path.node')

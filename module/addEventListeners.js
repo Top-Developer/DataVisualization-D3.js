@@ -172,27 +172,62 @@ function addEventListeners(){
 
   d3.select('.btn-search').on('click', function(d){
 
-    if( document.getElementById('id-search').value != '' ){
+    var t = document.getElementById('id-search').value;
 
+    if( t != '' ){
+      project.layers[project.layer_count].nodes.forEach(function(n){
+        if( n['Node'] == t ){
+          if( project.layer_count == 0 ){
+            d3.select('#main-svg')
+              .selectAll('path.node')
+              .style('opacity', function(d){
+                if(t == d['data']['Node']){
+                  return 1;
+                }
+                else{
+                  return 0.2;
+                }
+              });
+              d3.select('#main-svg')
+                .selectAll('line.edge')
+                .style('opacity', 0);
+          }
+          else if( project.layer_count > 0 ){
+            d3.select('#layer-svg')
+              .selectAll('path.node')
+              .style('opacity', function(d){
+                if(t == d['Node']){
+                  return 1;
+                }
+                else{
+                  return 0.2;
+                }
+              });
+              d3.select('#layer-svg')
+                .selectAll('line.edge')
+                .style('opacity', 0);
+          }
+        }
+      });
     }
 
 
 
-    var result = d3.select('#' + document.getElementById('id-search').value);
-
-		if( !result.empty() ){
-
-			if( project.searchedNodeId != '' ){
-
-				d3.select('#' + project.searchedNodeId).attr('d', function(d){
-			    return custom_shapes[d.shape](project.node_radius, project.node_radius);
-			  });
-			}
-			result.attr('d', function(d){
-				return custom_shapes[d.shape]( 1.5 * project.node_radius, 1.5 * project.node_radius);
-			});
-			project.searchedNodeId = result.attr('id');
-			console.log(project.searchedNodeId);
-		}
+    // var result = d3.select('#' + document.getElementById('id-search').value);
+    //
+		// if( !result.empty() ){
+    //
+		// 	if( project.searchedNodeId != '' ){
+    //
+		// 		d3.select('#' + project.searchedNodeId).attr('d', function(d){
+		// 	    return custom_shapes[d.shape](project.node_radius, project.node_radius);
+		// 	  });
+		// 	}
+		// 	result.attr('d', function(d){
+		// 		return custom_shapes[d.shape]( 1.5 * project.node_radius, 1.5 * project.node_radius);
+		// 	});
+		// 	project.searchedNodeId = result.attr('id');
+		// 	console.log(project.searchedNodeId);
+		// }
 	});
 }
