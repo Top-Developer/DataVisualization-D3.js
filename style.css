@@ -350,3 +350,19 @@ div.tooltip {
 	border-right: 14px solid transparent;
 	border-top: 7px solid #ccc;
 }
+
+#blue-line{
+  display: inline-block;
+  width: 30px;
+  height: 2px;
+  margin: 0px 5px 7px 10px;
+  background-color: blue;
+}
+
+#red-line{
+  display: inline-block;
+  width: 30px;
+  height: 2px;
+  margin: 0px 5px 7px 10px;
+  background-color: red;
+}

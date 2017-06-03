@@ -23,19 +23,19 @@ function addEventListeners(){
         n['bus_filtered'] = false;
         if ( n['var_filtered'] == true ){
           n['hidden'] = true;
-          d3.selectAll( 'path#' + n['id'] )
-          .attr('class', 'hidden');
+          d3.selectAll( 'path#' + n['Node'] )
+          .attr('class', 'node hidden');
         }
         else{
-          d3.selectAll( 'path#' + n['id'] )
-          .attr('class', '');
+          d3.selectAll( 'path#' + n['Node'] )
+          .attr('class', 'node');
           n['hidden'] = false;
           n['var_filtered'] = false;
         }
       });
 
       project['edges'].forEach(function(e){
-        if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
+        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
           d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
           .attr('class', 'hidden');
           e['var_filtered'] = true;
@@ -54,24 +54,23 @@ function addEventListeners(){
     else if( sel.options[sel.selectedIndex].value == 'BU01' ){
 
       project['nodes'].forEach(function(n){
-        console.log(n['busunit']);
-        if( n['busunit'] == 'BU01' ){
+        if( n['Bus.Unit'] == 'BU01' ){
           n['bus_filtered'] = true;
           n['hidden'] = true;
-          d3.selectAll( 'path#' + n['id'] )
-          .attr('class', 'hidden');
+          d3.selectAll( 'path#' + n['Node'] )
+          .attr('class', 'node hidden');
         }else{
           n['bus_filtered'] = false;
           if( n['var_filtered'] != true ){
             n['hidden'] = false;
-            d3.selectAll( 'path#' + n['id'] )
-            .attr('class', '');
+            d3.selectAll( 'path#' + n['Node'] )
+            .attr('class', 'node');
           }
         }
       });
 
       project['edges'].forEach(function(e){
-        if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
+        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
           d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
           .attr('class', 'hidden');
           e['var_filtered'] = true;
@@ -90,25 +89,25 @@ function addEventListeners(){
     else if( sel.options[sel.selectedIndex].value == 'BU02' ){
 
       project['nodes'].forEach(function(n){
-        if( n['busunit'] == 'BU02' ){
+        if( n['Bus.Unit'] == 'BU02' ){
           n['bus_filtered'] = true;
           n['hidden'] = true;
-          d3.selectAll( 'path#' + n['id'] )
-          .attr('class', 'hidden');
+          d3.selectAll( 'path#' + n['Node'] )
+          .attr('class', 'node hidden');
         }else{
           n['bus_filtered'] = false;
           if( n['var_filtered'] != true ){
             n['hidden'] = false;
-            d3.selectAll( 'path#' + n['id'] )
-            .attr('class', '');
+            d3.selectAll( 'path#' + n['Node'] )
+            .attr('class', 'node');
           }
         }
       });
 
       project['edges'].forEach(function(e){
-        if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
+        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
           d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-          .attr('class', 'hidden');
+            .attr('class', 'hidden');
           e['var_filtered'] = true;
           e['hidden'] = true;
         }
@@ -130,9 +129,9 @@ function addEventListeners(){
     console.log(+this.value);
     var t = +this.value;
     project['nodes'].forEach(function(n){
-      if( parseInt( n['var'] ) < t ){
-        d3.selectAll( 'path#' + n['id'] )
-        .attr('class', 'hidden');
+      if( parseInt( n['Variance'] ) < t ){
+        d3.selectAll( 'path#' + n['Node'] )
+        .attr('class', 'node hidden');
         n['var_filtered'] = true;
         n['hidden'] = true;
       }
@@ -140,13 +139,13 @@ function addEventListeners(){
         n['var_filtered'] = false;
         if( n['bus_filtered'] != true ){
           n['hidden'] = false;
-          d3.selectAll( 'path#' + n['id'] )
-          .attr('class', '');
+          d3.selectAll( 'path#' + n['Node'] )
+          .attr('class', 'node');
         }
       }
     });
     project['edges'].forEach(function(e){
-      if( e['source']['hidden'] == true || e['target']['hidden'] == true ){
+      if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
         d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
         .attr('class', 'hidden');
         e['var_filtered'] = true;

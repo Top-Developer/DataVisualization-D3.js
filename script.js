@@ -20,6 +20,7 @@ $(document).ready(function(){
 			project.nodes = d3.csvParse(data);
 
       project.nodes.forEach(function(n){
+
         if( n['Node'].substring(0,2) == 'RP' ){
           n['Shape'] = 'parallelogram';
         }
@@ -29,6 +30,7 @@ $(document).ready(function(){
         else if( n['Node'].substring(0,2) == 'SF' || n['Node'].substring(0,2) == 'FP' ){
           n['Shape'] = 'hexagon';
         }
+
       });
 
 			$.ajax({
@@ -39,12 +41,20 @@ $(document).ready(function(){
 
 					project.edges = d3.csvParse(data);
 
+          var i = 0;
+          project.edges.forEach(function(e){
+            e['ind'] = i;
+            i++;
+          })
+
           var diameter = 1000;
           var main_svg = d3.select('#main-svg')
             .attr('width', diameter)
             .attr('height', diameter);
 
           drawBasicLayer(project, main_svg);
+
+          addEventListeners();
 
 					// project.layer_count = 0;
 					// project.layers.push({
