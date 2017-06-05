@@ -27,126 +27,181 @@ function addEventListeners(){
     var sel = document.getElementById('business-category');
     if( sel.options[sel.selectedIndex].value == 'All categories' ){
 
-      project['nodes'].forEach(function(n){
-        n['bus_filtered'] = false;
-        if ( n['var_filtered'] == true ){
-          n['hidden'] = true;
-          d3.selectAll( 'path#' + n['Node'] )
-          .attr('class', 'node hidden');
-        }
-        else{
-          d3.selectAll( 'path#' + n['Node'] )
-          .attr('class', 'node');
-          n['hidden'] = false;
-          n['var_filtered'] = false;
-        }
-      });
+			d3.select('div#overlay')
+				.style('display', 'block');
+			d3.select('.loader')
+				.style('display', 'block');
+			d3.select('span#min-variance-val').text(function(d){
+				return +d3.select('#min-variance').property("value");
+			});
 
-      project['edges'].forEach(function(e){
-        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
-          d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-          .attr('class', 'hidden');
-          e['var_filtered'] = true;
-          e['hidden'] = true;
-        }
-        else{
-          e['var_filtered'] = false;
-          if( e['bus_filtered'] != true ){
-            e['hidden'] = false;
-            d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-            .attr('class', '');
-          }
-        }
-      });
+			setTimeout(function(){
+				project['nodes'].forEach(function(n){
+	        n['bus_filtered'] = false;
+	        if ( n['var_filtered'] == true ){
+	          n['hidden'] = true;
+	          d3.selectAll( 'path#' + n['Node'] )
+	          .attr('class', 'node hidden');
+	        }
+	        else{
+	          d3.selectAll( 'path#' + n['Node'] )
+	          .attr('class', 'node');
+	          n['hidden'] = false;
+	          n['var_filtered'] = false;
+	        }
+	      });
+
+	      project['edges'].forEach(function(e){
+	        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
+	          d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+	          .attr('class', 'edge hidden');
+	          e['var_filtered'] = true;
+	          e['hidden'] = true;
+	        }
+	        else{
+	          e['var_filtered'] = false;
+	          if( e['bus_filtered'] != true ){
+	            e['hidden'] = false;
+	            d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+	            .attr('class', 'edge');
+	          }
+	        }
+	      });
+				closeReport();
+				d3.select('div#overlay')
+					.style('display', 'none');
+				d3.select('.loader')
+					.style('display', 'none');
+			}, 10);
     }
     else if( sel.options[sel.selectedIndex].value == 'BU01' ){
 
-      project['nodes'].forEach(function(n){
-        if( n['Bus.Unit'] == 'BU01' ){
-          n['bus_filtered'] = true;
-          n['hidden'] = true;
-          d3.selectAll( 'path#' + n['Node'] )
-          .attr('class', 'node hidden');
-        }else{
-          n['bus_filtered'] = false;
-          if( n['var_filtered'] != true ){
-            n['hidden'] = false;
-            d3.selectAll( 'path#' + n['Node'] )
-            .attr('class', 'node');
-          }
-        }
-      });
+			d3.select('div#overlay')
+				.style('display', 'block');
+			d3.select('.loader')
+				.style('display', 'block');
+			d3.select('span#min-variance-val').text(function(d){
+				return +d3.select('#min-variance').property("value");
+			});
 
-      project['edges'].forEach(function(e){
-        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
-          d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-          .attr('class', 'hidden');
-          e['var_filtered'] = true;
-          e['hidden'] = true;
-        }
-        else{
-          e['var_filtered'] = false;
-          if( e['bus_filtered'] != true ){
-            e['hidden'] = false;
-            d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-            .attr('class', '');
-          }
-        }
-      });
+			setTimeout(function(){
+
+	      project['nodes'].forEach(function(n){
+	        if( n['Bus.Unit'] == 'BU01' ){
+	          n['bus_filtered'] = true;
+	          n['hidden'] = true;
+	          d3.selectAll( 'path#' + n['Node'] )
+	          .attr('class', 'node hidden');
+	        }else{
+	          n['bus_filtered'] = false;
+	          if( n['var_filtered'] != true ){
+	            n['hidden'] = false;
+	            d3.selectAll( 'path#' + n['Node'] )
+	            .attr('class', 'node');
+	          }
+	        }
+	      });
+
+	      project['edges'].forEach(function(e){
+	        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
+	          d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+	          .attr('class', 'edge hidden');
+	          e['var_filtered'] = true;
+	          e['hidden'] = true;
+	        }
+	        else{
+	          e['var_filtered'] = false;
+	          if( e['bus_filtered'] != true ){
+	            e['hidden'] = false;
+	            d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+	            .attr('class', 'edge');
+	          }
+	        }
+	      });
+				closeReport();
+				d3.select('div#overlay')
+					.style('display', 'none');
+				d3.select('.loader')
+					.style('display', 'none');
+			}, 10);
     }
     else if( sel.options[sel.selectedIndex].value == 'BU02' ){
 
-      project['nodes'].forEach(function(n){
-        if( n['Bus.Unit'] == 'BU02' ){
-          n['bus_filtered'] = true;
-          n['hidden'] = true;
-          d3.selectAll( 'path#' + n['Node'] )
-          .attr('class', 'node hidden');
-        }else{
-          n['bus_filtered'] = false;
-          if( n['var_filtered'] != true ){
-            n['hidden'] = false;
-            d3.selectAll( 'path#' + n['Node'] )
-            .attr('class', 'node');
-          }
-        }
-      });
+			d3.select('div#overlay')
+				.style('display', 'block');
+			d3.select('.loader')
+				.style('display', 'block');
+			d3.select('span#min-variance-val').text(function(d){
+				return +d3.select('#min-variance').property("value");
+			});
 
-      project['edges'].forEach(function(e){
-        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
-          d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-            .attr('class', 'hidden');
-          e['var_filtered'] = true;
-          e['hidden'] = true;
-        }
-        else{
-          e['var_filtered'] = false;
-          if( e['bus_filtered'] != true ){
-            e['hidden'] = false;
-            d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-            .attr('class', '');
-          }
-        }
-      });
+			setTimeout(function(){
+
+	      project['nodes'].forEach(function(n){
+	        if( n['Bus.Unit'] == 'BU02' ){
+	          n['bus_filtered'] = true;
+	          n['hidden'] = true;
+	          d3.selectAll( 'path#' + n['Node'] )
+	          .attr('class', 'node hidden');
+	        }else{
+	          n['bus_filtered'] = false;
+	          if( n['var_filtered'] != true ){
+	            n['hidden'] = false;
+	            d3.selectAll( 'path#' + n['Node'] )
+	            .attr('class', 'node');
+	          }
+	        }
+	      });
+
+	      project['edges'].forEach(function(e){
+	        if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
+	          d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+	            .attr('class', 'edge hidden');
+	          e['var_filtered'] = true;
+	          e['hidden'] = true;
+	        }
+	        else{
+	          e['var_filtered'] = false;
+	          if( e['bus_filtered'] != true ){
+	            e['hidden'] = false;
+	            d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
+	            .attr('class', 'edge');
+	          }
+	        }
+	      });
+				closeReport();
+				d3.select('div#overlay')
+					.style('display', 'none');
+				d3.select('.loader')
+					.style('display', 'none');
+			}, 10);
     }
   });
 
   d3.select('#min-variance')
-  .on('input', function(e){
-		d3.select('div#overlay')
-			.style('display', 'block');
-		console.log( d3.select('div#overlay').style('display') );
-    filter();
-		closeReport();
-		d3.select('div#overlay')
-			.style('display', 'none');
-  });
+	  .on('input', function(e){
+
+			d3.select('div#overlay')
+				.style('display', 'block');
+			d3.select('.loader')
+				.style('display', 'block');
+			d3.select('span#min-variance-val').text(function(d){
+				return +d3.select('#min-variance').property("value");
+			});
+
+			setTimeout(function(){
+	    	filter();
+				closeReport();
+				d3.select('div#overlay')
+					.style('display', 'none');
+				d3.select('.loader')
+					.style('display', 'none');
+			}, 10);
+
+	  });
 
 	function filter(callback){
-		call
-		console.log( d3.select('#min-variance').property("value"));
-    console.log(+d3.select('#min-variance').property("value") );
-    var t = +d3.select('#min-variance').property("value");
+		var t = +d3.select('#min-variance').property("value");
     project['nodes'].forEach(function(n){
       if( parseInt( n['Variance'] ) < t ){
         d3.selectAll( 'path#' + n['Node'] )
@@ -159,7 +214,7 @@ function addEventListeners(){
         if( n['bus_filtered'] != true ){
           n['hidden'] = false;
           d3.selectAll( 'path#' + n['Node'] )
-          .attr('class', 'node');
+          	.attr('class', 'node');
         }
       }
     });

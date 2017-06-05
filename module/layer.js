@@ -103,34 +103,34 @@ console.log(layer['inout']);
 		if( theNode['Type'] == 'SR') {
 			sr.push({
 				'label' : theNode['Node'],
-				'value' : e['Cost'],
+				'value' : parseFloat( e['Cost'] ),
 				'svalue' : parseInt( theNode['Variance'] )
 			});
-			total['sr'] += e['Cost'];console.log(total['sr']);
+			total['sr'] += parseFloat( e['Cost'] );console.log(total['sr']);
 		}
 		if( theNode['type'] == 'PR') {
 			pr.push({
 				'label' : theNode['Node'],
-				'value' : e['Cost'],
+				'value' : parseFloat( e['Cost'] ),
 				'svalue' : parseInt( theNode['Variance'] )
 			});
-			total['pr'] += e['Cost'];console.log(total['pr']);
+			total['pr'] += parseFloat( e['Cost'] );console.log(total['pr']);
 		}
 		if( theNode['type'] == 'SP') {
 			sp.push({
 				'label' : theNode['Node'],
-				'value' : e['Cost'],
+				'value' : parseFloat( e['Cost'] ),
 				'svalue' : parseInt( theNode['Variance'] )
 			});
-			total['sp'] += Math.round(e['Cost']);console.log(total['sp']);
+			total['sp'] += parseFloat( e['Cost'] );console.log(total['sp']);
 		}
 		if( theNode['Type'] == 'FP') {
 			fp.push({
 				'label' : theNode['Node'],
-				'value' : e['Cost'],
+				'value' : parseFloat( e['Cost'] ),
 				'svalue' : parseInt( theNode['Variance'] )
 			});
-			total['fp'] += e['Cost'];console.log(total['fp']);
+			total['fp'] += parseFloat( e['Cost'] );console.log(total['fp']);
 		}
 	});
 
@@ -138,6 +138,11 @@ console.log(layer['inout']);
 	console.log(pr);console.log('\n');
 	console.log(sp);console.log('\n');
 	console.log(fp);console.log('\n');
+	console.log(total['sr']);console.log('\n');
+	console.log(total['pr']);console.log('\n');
+	console.log(total['sp']);console.log('\n');
+	console.log(total['fp']);console.log('\n');
+
 
 	total['all'] = total['sr'] + total['pr'] + total['sp'] + total['fp'];	console.log(total);
 

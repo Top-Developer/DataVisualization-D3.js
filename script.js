@@ -54,6 +54,13 @@ $(document).ready(function(){
 						searchedNodeId: null
 					};
 
+					d3.select('.loader')
+						.style('display', 'none');
+					d3.select('div#overlay')
+						.style('display', 'none');
+					d3.select('div#control-pane')
+						.style('display', 'block');
+
           addEventListeners();
 
 					// project.layer_count = 0;

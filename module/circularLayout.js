@@ -71,18 +71,18 @@ function circularLayout(svg, layer){
     })
     .attr('y', function(d){
       if ( nodeToOrder[d['Node']] == undefined ){
-        return 300;
+        return 350;
       }else{
-        return 300 + 250 * Math.sin( 2 * Math.PI * nodeToOrder[d['Node']] / count);
+        return 350 + 250 * Math.sin( 2 * Math.PI * nodeToOrder[d['Node']] / count);
       }
     })
     .attr('transform', function(d){
       if ( nodeToOrder[d['Node']] == undefined ){
-        return 'translate(400, 300)' ;
+        return 'translate(400, 350)' ;
       }
       else{
         var x = 400 + 250 * Math.cos( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
-        var y = 300 + 250 * Math.sin( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
+        var y = 350 + 250 * Math.sin( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
         return 'translate(' +
           x +
           ',' +
@@ -251,11 +251,11 @@ function circularLayout(svg, layer){
         })
         .attr('transform', function(d){
           if ( nodeToOrder[d['Node']] == undefined ){
-            return 'translate(400, 280)' ;
+            return 'translate(400, 330)' ;
           }
           else{
             var x = 400 + 320 * Math.cos( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
-            var y = 300 + 280 * Math.sin( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
+            var y = 350 + 280 * Math.sin( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
             return 'translate(' +
               x +
               ',' +
