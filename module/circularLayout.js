@@ -64,9 +64,9 @@ function circularLayout(svg, layer){
 		})
     .attr('x', function(d){
       if ( nodeToOrder[d['Node']] == undefined ){
-        return 300;
+        return 400;
       }else{console.log(d['Node']);console.log(nodeToOrder[d['Node']]);
-        return 300 + 250 * Math.cos( 2 * Math.PI * nodeToOrder[d['Node']] / count);
+        return 400 + 250 * Math.cos( 2 * Math.PI * nodeToOrder[d['Node']] / count);
       }
     })
     .attr('y', function(d){
@@ -78,10 +78,10 @@ function circularLayout(svg, layer){
     })
     .attr('transform', function(d){
       if ( nodeToOrder[d['Node']] == undefined ){
-        return 'translate(300, 300)' ;
+        return 'translate(400, 300)' ;
       }
       else{
-        var x = 300 + 250 * Math.cos( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
+        var x = 400 + 250 * Math.cos( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
         var y = 300 + 250 * Math.sin( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
         return 'translate(' +
           x +
@@ -230,4 +230,36 @@ function circularLayout(svg, layer){
   		.append('title').text(function(d){
   	    return d['Node'];
   	  });
+
+      svg.append('g')
+        .attr('class', 'texts')
+        .selectAll('text.name')
+        .data(layer['nodes'])
+        .enter()
+        .append('text')
+        .attr('class', 'name')
+        .attr('font-size', function(d){
+          if ( nodeToOrder[d['Node']] == undefined ){
+            return '24px';
+          }
+          else{
+            return '14px';
+          }
+        })
+        .text(function(d){
+          return d['Node'];
+        })
+        .attr('transform', function(d){
+          if ( nodeToOrder[d['Node']] == undefined ){
+            return 'translate(400, 280)' ;
+          }
+          else{
+            var x = 400 + 320 * Math.cos( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
+            var y = 300 + 280 * Math.sin( 2 * Math.PI * parseInt(nodeToOrder[d['Node']]) / count);
+            return 'translate(' +
+              x +
+              ',' +
+              y + ')';
+          }
+        })
 }

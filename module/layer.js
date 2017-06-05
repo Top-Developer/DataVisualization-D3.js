@@ -76,6 +76,9 @@ function refreshInfoBox(layer){
 
 function showTreeMap(layer){
 
+	d3.select('div#overlay')
+		.style('display', 'block');
+
 	var sr = [], pr = [], sp  = [], fp = [], total = [];
 	total['sr'] = 0;
 	total['pr'] = 0;
@@ -91,43 +94,43 @@ function showTreeMap(layer){
 
 		layer['nodes'].forEach(function(n){
 			if( layer['inout'] == 1 ){
-				if( e['source']['id'] == n['id'] ) theNode = n;
+				if( e['Sender'] == n['Node'] ) {theNode = n;console.log(theNode);}
 			}else if( layer['inout'] == 0 ){
-				if( e['target']['id'] == n['id'] ) theNode = n;
+				if( e['Receiver'] == n['Node'] ) theNode = n;
 			}
 		});
-
-		if( theNode['type'] == 'SR') {
+console.log(layer['inout']);
+		if( theNode['Type'] == 'SR') {
 			sr.push({
-				'label' : theNode['id'],
-				'value' : e['cost'],
-				'svalue' : parseInt( theNode['var'] )
+				'label' : theNode['Node'],
+				'value' : e['Cost'],
+				'svalue' : parseInt( theNode['Variance'] )
 			});
-			total['sr'] += e['cost'];console.log(total['sr']);
+			total['sr'] += e['Cost'];console.log(total['sr']);
 		}
 		if( theNode['type'] == 'PR') {
 			pr.push({
-				'label' : theNode['id'],
-				'value' : e['cost'],
-				'svalue' : parseInt( theNode['var'] )
+				'label' : theNode['Node'],
+				'value' : e['Cost'],
+				'svalue' : parseInt( theNode['Variance'] )
 			});
-			total['pr'] += e['cost'];console.log(total['pr']);
+			total['pr'] += e['Cost'];console.log(total['pr']);
 		}
 		if( theNode['type'] == 'SP') {
 			sp.push({
-				'label' : theNode['id'],
-				'value' : e['cost'],
-				'svalue' : parseInt( theNode['var'] )
+				'label' : theNode['Node'],
+				'value' : e['Cost'],
+				'svalue' : parseInt( theNode['Variance'] )
 			});
-			total['sp'] += Math.round(e['cost']);console.log(total['sp']);
+			total['sp'] += Math.round(e['Cost']);console.log(total['sp']);
 		}
-		if( theNode['type'] == 'FP') {
+		if( theNode['Type'] == 'FP') {
 			fp.push({
-				'label' : theNode['id'],
-				'value' : e['cost'],
-				'svalue' : parseInt( theNode['var'] )
+				'label' : theNode['Node'],
+				'value' : e['Cost'],
+				'svalue' : parseInt( theNode['Variance'] )
 			});
-			total['fp'] += e['cost'];console.log(total['fp']);
+			total['fp'] += e['Cost'];console.log(total['fp']);
 		}
 	});
 
@@ -187,7 +190,7 @@ function showTreeMap(layer){
 				"chart" : {
 		        "animation": "0",
 		        "hidetitle": "1",
-		        "plottooltext": "$label Cost: $$value Variance: $svalue%",
+		        "plottooltext": "$label Cost: $$value Variance: $svalue",
 		        "spacex": "0",
 		        "spacey": "0",
 		        "horizontalpadding": "1",
