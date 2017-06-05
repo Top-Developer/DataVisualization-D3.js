@@ -133,9 +133,20 @@ function addEventListeners(){
 
   d3.select('#min-variance')
   .on('input', function(e){
-    console.log( d3.select('#min-variance').property("value"));
-    console.log(+this.value);
-    var t = +this.value;
+		d3.select('div#overlay')
+			.style('display', 'block');
+		console.log( d3.select('div#overlay').style('display') );
+    filter();
+		closeReport();
+		d3.select('div#overlay')
+			.style('display', 'none');
+  });
+
+	function filter(callback){
+		call
+		console.log( d3.select('#min-variance').property("value"));
+    console.log(+d3.select('#min-variance').property("value") );
+    var t = +d3.select('#min-variance').property("value");
     project['nodes'].forEach(function(n){
       if( parseInt( n['Variance'] ) < t ){
         d3.selectAll( 'path#' + n['Node'] )
@@ -155,7 +166,7 @@ function addEventListeners(){
     project['edges'].forEach(function(e){
       if( d3.select('path#' + e['Sender']).attr('class') == 'node hidden' || d3.select('path#'+e['Receiver']).attr('class') == 'node hidden' ){
         d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-        .attr('class', 'hidden');
+        .attr('class', 'edge hidden');
         e['var_filtered'] = true;
         e['hidden'] = true;
       }
@@ -164,11 +175,11 @@ function addEventListeners(){
         if( e['bus_filtered'] != true ){
           e['hidden'] = false;
           d3.selectAll( 'line[ind="' + e['ind'] + '"]' )
-          .attr('class', '');
+          .attr('class', 'edge');
         }
       }
     });
-  });
+	}
 
   d3.select('.btn-search').on('click', function(d){
 
@@ -209,6 +220,7 @@ function addEventListeners(){
           }
         }
       });
+			closeReport();
     }
 
 

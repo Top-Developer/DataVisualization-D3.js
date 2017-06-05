@@ -123,6 +123,7 @@ function drawBasicLayer(theProject, svg){
 		.data(theProject['edges'])
 		.enter()
 		.append("line")
+		.attr('class', 'edge')
 		.attr('x1', function(d) { return svg.select('path#' + d.Sender).attr('x'); })
 		.attr('y1', function(d) { return svg.select('path#' + d.Sender).attr('y'); })
 		.attr('x2', function(d) { return svg.select('path#' + d.Receiver).attr('x'); })
@@ -130,7 +131,6 @@ function drawBasicLayer(theProject, svg){
 		.attr('ind', function(d){
 			return d['ind'];
 		})
-		.attr('class', 'edge')
 		.style('stroke', '#000')
 		.style('stroke-width', 2)
 		.style('opacity', 0);

@@ -1,5 +1,10 @@
 'use strict'
 
+function closeInfoBox(){
+	d3.select('#infoBox')
+	.style('opacity', 0);
+}
+
 function closeReport(){
 	d3.select('#node-report')
 	.style('opacity', 0)
@@ -19,6 +24,7 @@ function closePopup(){
 		project.layer_count--;
 	}
 	closeReport();
+	closeInfoBox();
 }
 
 function consumptionInOutbound(inout, d){

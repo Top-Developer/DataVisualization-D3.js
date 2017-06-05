@@ -41,22 +41,26 @@ function refreshInfoBox(layer){
 										'<p>' + active + layer['theCenterNode']['Node'] + '</p>' +
 										'<span class = "line"></span>' +
 										'<div class = "row">' +
-											'<div class = "col-6">' + passive +'</div>' +
-											'<div class = "col-3">Cost</div>' +
-											'<div class = "col-3">Quantity</div>' +
+											'<div class = "col-4">' + passive +'</div>' +
+											'<div class = "col-2">Version</div>' +
+											'<div class = "col-2">Cost</div>' +
+											'<div class = "col-2">Quantity</div>' +
+											'<div class = "col-2">UoM</div>' +
 										'</div>' +
 										'<div class = "row scrollable">';
 	layer['edges'].forEach(function(e){
 		if ( layer['inout'] == 1 ){
       innerHTML += '<div class = "row">' +
-                      '<div class = "col-6">' + e['Sender'] + '</div>';
+                      '<div class = "col-4">' + e['Sender'] + '</div>';
 		}
     else if ( layer['inout'] == 0 ){
       innerHTML += '<div class = "row">' +
-                      '<div class = "col-6">' + e['Receiver'] + '</div>';
+                      '<div class = "col-4">' + e['Receiver'] + '</div>';
     }
-    innerHTML += '<div class = "col-3">' + Math.round( e['Cost'] * 100 ) / 100 + '</div>' +
-                  '<div class = "col-3">' + Math.round( e['Quantity'] * 100 ) / 100 + '</div>' +
+    innerHTML += '<div class = "col-2">' + e['Version'] + '</div>' +
+									'<div class = "col-2">' + Math.round( e['Cost'] * 100 ) / 100 + '</div>' +
+                  '<div class = "col-2">' + Math.round( e['Quantity'] * 100 ) / 100 + '</div>' +
+									'<div class = "col-2">' + e['UoM'] + '</div>' +
                 '</div>';
 	});
 	innerHTML += '</div>';
@@ -230,4 +234,8 @@ function showTreeMap(layer){
 		console.log(data);
 		revenueChart.render();
 	})
+}
+
+function displayTreeMap(){
+	showTreeMap(project.layers[project.layer_count]);
 }

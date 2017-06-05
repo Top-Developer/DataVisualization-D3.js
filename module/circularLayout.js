@@ -2,19 +2,29 @@
 
 function circularLayout(svg, layer){
 
-  var count = layer['edges'].length;
   var nodeToOrder = {};
-  var order = 0;
+  var count = 0;
   layer['edges'].forEach(function(e){
+    console.log(nodeToOrder[e['Sender']]);
+    console.log(nodeToOrder[e['Receiver']]);
     if( layer['inout'] == 1 ){
-      nodeToOrder[e['Sender']] = order;
-      order++;
+      if( nodeToOrder[e['Sender']] == undefined ){
+        nodeToOrder[e['Sender']] = count;
+        console.log(count);
+        console.log(e['Sender']);
+        count++;
+      }
     }
     else if( layer['inout'] == 0 ){
-      nodeToOrder[e['Receiver']] = order;
-      order++;
+      if( nodeToOrder[e['Receiver']] == undefined ){
+        nodeToOrder[e['Receiver']] = count;
+        console.log(count);
+        count++;
+      }
     }
-  });console.log(nodeToOrder);
+    console.log(nodeToOrder[e['Sender']]);
+    console.log(nodeToOrder[e['Receiver']]);
+  });
 
   svg.on('click', function(){
     svg.selectAll('path.node')
@@ -41,14 +51,21 @@ function circularLayout(svg, layer){
     .data(layer['nodes'])
     .enter()
     .append('path')
-    .attr('class', 'node')
+    .attr('class', function(n){
+      if( n['hidden'] == true ){
+        return 'node hidden';
+      }
+      else{
+        return 'node';
+      }
+    })
     .attr('id', function(d) {
 			return d['Node'];
 		})
     .attr('x', function(d){
       if ( nodeToOrder[d['Node']] == undefined ){
         return 300;
-      }else{
+      }else{console.log(d['Node']);console.log(nodeToOrder[d['Node']]);
         return 300 + 250 * Math.cos( 2 * Math.PI * nodeToOrder[d['Node']] / count);
       }
     })
@@ -109,7 +126,14 @@ function circularLayout(svg, layer){
   		.attr('ind', function(d){
   			return d['ind'];
   		})
-  		.attr('class', 'edge')
+      .attr('class', function(e){
+        if( e['hidden'] == true ){
+          return 'edge hidden';
+        }
+        else{
+          return 'edge';
+        }
+      })
   		.style('stroke', function(d){
         if( layer['inout'] == 1 ){
           return '#00f';
