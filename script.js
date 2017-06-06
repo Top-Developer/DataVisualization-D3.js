@@ -63,15 +63,6 @@ $(document).ready(function(){
 
           addEventListeners();
 
-					// project.layer_count = 0;
-					// project.layers.push({
-					// 	'nodes': project.nodes,
-					// 	'edges': project.edges,
-					// 	'inout': -1,
-					// 	'theCenterNode': null
-					// });
-
-					//addEventListeners();
 				}
 			});
 		}

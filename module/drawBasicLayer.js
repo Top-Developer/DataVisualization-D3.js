@@ -82,13 +82,13 @@ function drawBasicLayer(theProject, svg){
 			return d.children ? "node" : "leaf node";
 		})
 		.attr('x', function(d) {
-			return d.x;
+			return 1000 - d.x;
 		})
 		.attr('y', function(d) {
-			return d.y;
+			return 1000 - d.y;
 		})
 		.attr('transform', function(d) {
-			return "translate(" + d.x + "," + d.y + ")";
+			return "translate(" + (1000 - d.x) + "," + (1000 - d.y) + ")";
 		})
 	  .attr('d', function(d){
 			if( d['data']['Shape'] ){

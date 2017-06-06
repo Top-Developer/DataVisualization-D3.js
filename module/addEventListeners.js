@@ -178,16 +178,20 @@ function addEventListeners(){
     }
   });
 
-  d3.select('#min-variance')
+	d3.select('#min-variance')
 	  .on('input', function(e){
+			d3.select('span#min-variance-val').text(function(d){
+				return +d3.select('#min-variance').property("value");
+			});
+		});
+
+	d3.select('#min-variance')
+	  .on('mouseup', function(e){
 
 			d3.select('div#overlay')
 				.style('display', 'block');
 			d3.select('.loader')
 				.style('display', 'block');
-			d3.select('span#min-variance-val').text(function(d){
-				return +d3.select('#min-variance').property("value");
-			});
 
 			setTimeout(function(){
 	    	filter();
