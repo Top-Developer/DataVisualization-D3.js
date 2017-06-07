@@ -17,6 +17,23 @@ function addEventListeners(){
     .style('display', 'none');
   });
 
+	d3.select('#toggle-edges')
+  .on('click', function(e){
+    console.log(d3.select(this).text());
+		if( d3.select(this).text() == ' Show all edges ' ){
+			d3.select(this).text(' Hide all edges ');
+			d3.selectAll('line.edge')
+				.style('opacity', 1);
+		}
+		else if( d3.select(this).text() == ' Hide all edges ' ){
+			d3.select(this).text(' Show all edges ');
+			d3.selectAll('line.edge')
+				.style('opacity', 0);
+		}
+		// d3.select(this)
+		// 	.text()
+  });
+
   d3.select('div#chartContainer')
   .on('click', function(e){
     d3.event.stopPropagation();

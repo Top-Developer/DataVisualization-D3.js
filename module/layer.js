@@ -21,7 +21,7 @@ var custom_shapes = {
 	},
 	arrow: function(radius) {
 		var width = radius * 0.6, height = radius * 0.6;
-		var points = [ [width, 0], [width/2, height*.865], [-width*1.5, height*.865], [-width, 0], [-width*1.5, -height*.865], [width/2, -height*.865], [width, 0] ]
+		var points = [ [width, 0], [width/2, height*.666], [-width*1.5, height*.666], [-width, 0], [-width*1.5, -height*.666], [width/2, -height*.666], [width, 0] ]
 		return d3.line()(points);
 	}
 }
