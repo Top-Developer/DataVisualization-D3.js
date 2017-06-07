@@ -22,6 +22,11 @@
         <h3>min variance :&nbsp;<span id="min-variance-val">0</span></h3>
         0 <input id="min-variance" min="0" max="30" value="0" type="range">
         <span id="max-variance-value">30</span><br>
+				<div class = 'legend' style='padding-left: 15px; padding-right: 45px;'>
+					<span id = 'white-bar'></span>
+					<span id = 'orange-bar'></span>
+					<span id = 'red-bar'></span>
+				</div>
       </div>
       <span class="line"></span>
       <div>
@@ -90,6 +95,7 @@
 		<div id = 'node-report' class = 'report'></div>
 		<div id = "overlay">
 			<div id = 'chartContainer'>FusionCharts XT will load here!</div>
+			<svg id = 'treeMapSVG' width = '600' height = '400'></svg>
 		</div>
 		<div class="loader"></div>
 		<script type = 'text/javascript' src = 'library/jquery-2.1.1.min.js'></script>

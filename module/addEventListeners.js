@@ -18,17 +18,22 @@ function addEventListeners(){
   });
 
 	d3.select('#toggle-edges')
-  .on('click', function(e){
-    console.log(d3.select(this).text());
+  	.on('click', function(e){
+
+		d3.selectAll('path.node')
+			.style('opacity', 1);
+
 		if( d3.select(this).text() == ' Show all edges ' ){
 			d3.select(this).text(' Hide all edges ');
 			d3.selectAll('line.edge')
 				.style('opacity', 1);
+			closeReport();
 		}
 		else if( d3.select(this).text() == ' Hide all edges ' ){
 			d3.select(this).text(' Show all edges ');
 			d3.selectAll('line.edge')
 				.style('opacity', 0);
+			closeReport();
 		}
 		// d3.select(this)
 		// 	.text()

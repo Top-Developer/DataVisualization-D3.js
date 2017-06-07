@@ -60,6 +60,8 @@ $(document).ready(function(){
 						.style('display', 'none');
 					d3.select('div#control-pane')
 						.style('display', 'block');
+					d3.select('body > svg')
+						.style('border', 'solid 1px');
 
           addEventListeners();
 
