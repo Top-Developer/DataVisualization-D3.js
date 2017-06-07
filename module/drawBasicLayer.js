@@ -57,22 +57,35 @@ function drawBasicLayer(theProject, svg){
 
 	var width = +svg.attr('width');console.log(width);
 	var height = +svg.attr('height');console.log(height);
+
+	var container = svg.append('g');
+
+	var zoom = d3.zoom()
+    .scaleExtent([1, 10])
+    .on('zoom', zoomed);
+
+	function zoomed(){
+		container.attr("transform", d3.event.transform);
+	}
+
+	svg.call(zoom);
+
 	var packLayer = d3.pack()
 	 	.size( [width, height] );
 
-	svg.on('click', function(){
+	container.on('click', function(){
 
 		closeReport();
 
-		svg.selectAll('path.node')
+		container.selectAll('path.node')
 			.style('opacity', 1);
 
-		svg.selectAll('line.edge')
+		container.selectAll('line.edge')
 			.style('stroke', '#000')
 			.style('opacity', 0);
 	});
 
-	var g = svg.append('g')
+	var g = container.append('g')
 		.attr('class', 'nodes');
 	var node = g.selectAll('.node')
 		.data(packLayer(hierarchy).descendants())
@@ -117,7 +130,7 @@ function drawBasicLayer(theProject, svg){
 	    return d['data']['Color'];
 	  });
 
-	var links =svg.insert('g', ':first-child')
+	var links =container.insert('g', ':first-child')
 		.attr('class', 'edges')
 		.selectAll("line.edge")
 		.data(theProject['edges'])
@@ -149,10 +162,10 @@ function drawBasicLayer(theProject, svg){
 
 			d3.event.stopPropagation();
 
-			svg.selectAll('line.edge')
+			container.selectAll('line.edge')
 				.style('opacity', 0);
 
-			svg.selectAll('path.node')
+			container.selectAll('path.node')
 				.style('opacity', 0.2);
 
 			d3.select(this)
@@ -199,17 +212,17 @@ function drawBasicLayer(theProject, svg){
 
 			theProject.edges.forEach(function(e){
 				if ( e['Sender'] == d['data']['Node'] ){
-					svg.select('line[ind="' + e['ind'] + '"]')
+					container.select('line[ind="' + e['ind'] + '"]')
 						.style('stroke', '#f00')
 						.style('opacity', 1);
-					svg.select('path#' + e['Receiver'] )
+					container.select('path#' + e['Receiver'] )
 						.style('opacity', 1);
 				}
 				else if ( e['Receiver'] == d['data']['Node'] ){
-					svg.select('line[ind="' + e['ind'] + '"]')
+					container.select('line[ind="' + e['ind'] + '"]')
 						.style('stroke', '#00f')
 						.style('opacity', 1);
-					svg.select('path#' + e['Sender'] )
+					container.select('path#' + e['Sender'] )
 						.style('opacity', 1);
 				}
 			})

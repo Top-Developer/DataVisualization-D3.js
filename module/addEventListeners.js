@@ -204,7 +204,7 @@ function addEventListeners(){
 
 	  });
 
-	function filter(callback){
+	function filter(){
 		var t = +d3.select('#min-variance').property("value");
     project['nodes'].forEach(function(n){
       if( parseInt( n['Variance'] ) < t ){
