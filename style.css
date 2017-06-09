@@ -6,12 +6,11 @@ circle {
 }
 
 #treeMapContainer{
-  margin: auto;
+  background-color: white;
 }
 
-.unit {
+.cell {
   box-sizing: border-box;
-  position: absolute;
   overflow: hidden;
 }
 
@@ -36,7 +35,7 @@ body {
 }
 
 body > svg{
-  margin: 50px 200px;
+  margin: 25px 300px;
 }
 
 a{
@@ -285,7 +284,7 @@ div.tooltip {
 .maptooltip{
   background-color: black;
   color: white;
-  
+
 }
 
 #parallelogram {

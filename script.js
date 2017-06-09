@@ -38,7 +38,7 @@ $(document).ready(function(){
             i++;
           })
 
-          var diameter = 1000;
+          var diameter = 800;
           var main_svg = d3.select('#main-svg')
             .attr('width', diameter)
             .attr('height', diameter);

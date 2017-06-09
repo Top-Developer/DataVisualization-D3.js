@@ -1,7 +1,7 @@
 'use strict'
 
 function showTreeMap(layer){
-
+console.log(layer);
   var sr = [], pr = [], sp = [], fp = [], done, theNode, total = {
     'sr': 0,
     'pr': 0,
@@ -15,14 +15,13 @@ function showTreeMap(layer){
   layer['edges'].forEach(function(e){
 		done = false;
 		theNode = null;
-    console.log(e);
+
 		if( e['Version'] == 'A/T' ){
 			if( parseFloat( e['Cost'] ) != 0.0 ){
 				if( layer['inout'] == 1 ){
 					layer['nodes'].forEach(function(n){
 						if( n['Node'] == e['Sender'] ){
 							theNode = n;
-              console.log(theNode);
 						}
 					});
 					if( theNode == null ){
@@ -60,7 +59,8 @@ function showTreeMap(layer){
 							label: theNode['Node'],
 							svalue: parseFloat( e['Cost'] ),
 							value: 0,
-              color: theNode['Color']
+              color: theNode['Color'],
+              type: 'SR'
 						});
 						done = true;
 					}
@@ -77,7 +77,8 @@ function showTreeMap(layer){
 							label: theNode['Node'],
 							svalue: parseFloat( e['Cost'] ),
 							value: 0,
-              color: theNode['Color']
+              color: theNode['Color'],
+              type: 'PR'
 						});
 						done = true;
 					}
@@ -94,7 +95,8 @@ function showTreeMap(layer){
 							label: theNode['Node'],
 							svalue: parseFloat( e['Cost'] ),
 							value: 0,
-              color: theNode['Color']
+              color: theNode['Color'],
+              type: 'SP'
 						});
 						done = true;
 					}
@@ -111,7 +113,8 @@ function showTreeMap(layer){
 							label: theNode['Node'],
 							svalue: parseFloat( e['Cost'] ),
 							value: 0,
-              color: theNode['Color']
+              color: theNode['Color'],
+              type: 'FP'
 						});
 						done = true;
 					}
@@ -162,7 +165,8 @@ function showTreeMap(layer){
 							label: theNode['Node'],
 							value: parseFloat( e['Cost'] ),
 							svalue: 0,
-              color: theNode['Color']
+              color: theNode['Color'],
+              type: 'SR'
 						});
 						total['sr'] += parseFloat( e['Cost'] );console.log(total['sr']);
 						done = true;
@@ -181,7 +185,8 @@ function showTreeMap(layer){
 							label: theNode['Node'],
 							value: parseFloat( e['Cost'] ),
 							svalue: 0,
-              color: theNode['Color']
+              color: theNode['Color'],
+              type: 'PR'
 						});
 						total['pr'] += parseFloat( e['Cost'] );console.log(total['pr']);
 						done = true;
@@ -200,7 +205,8 @@ function showTreeMap(layer){
 							label: theNode['Node'],
 							value: parseFloat( e['Cost'] ),
 							svalue: 0,
-              color: theNode['Color']
+              color: theNode['Color'],
+              type: 'SP'
 						});
 						total['sp'] += parseFloat( e['Cost'] );console.log(total['sp']);
 						done = true;
@@ -219,7 +225,8 @@ function showTreeMap(layer){
 							label: theNode['Node'],
 							value: parseFloat( e['Cost'] ),
 							svalue: 0,
-              color: theNode['Color']
+              color: theNode['Color'],
+              type: 'FP'
 						});
 						total['fp'] += parseFloat( e['Cost'] );console.log(total['fp']);
 						done = true;
@@ -285,9 +292,17 @@ function showTreeMap(layer){
 
   var width = 800, height = 600;
 
+  var margin_top = screen.height / 2 - 300;
+  var margin_left = $(window).width() / 2 - 400;
+
   var div = d3.select('#treeMapContainer')
-    .style("width", width)
-    .style("height", height);
+    .style('width', width)
+    .style('height', height)
+    .style('margin-top', margin_top)
+    .style('margin-left', margin_left);
+
+  d3.selectAll('#treeMapContainer > *')
+    .remove();
 
   console.log(width);
   console.log(height);
@@ -310,9 +325,6 @@ function showTreeMap(layer){
 
   var tree = treemap(root);
 
-  var margin_top = screen.height / 2 - 300;
-  var margin_left = $(window).width() / 2 - 400;
-
   var tooltip = d3.select("body")
 	.append('div')
   .attr('class', 'maptooltip')
@@ -321,11 +333,13 @@ function showTreeMap(layer){
 	.style('visibility', 'hidden');
 
   var leaf = div.datum(root)
-    .selectAll('.unit')
+    .selectAll('.cell')
     .data(tree.leaves())
     .enter()
     .append('div')
-    .attr('class', 'unit')
+    .attr('class', function(d){
+      return 'cell ' + d['data']['type'];
+    })
     .style('position', 'absolute')
     .style('left', function(d){
       return margin_left + d.x0 + 'px';
@@ -344,11 +358,14 @@ function showTreeMap(layer){
       return d['data']['color'];
     })
     .on('click', function(d){
+      // console.log(d['parent']);
+      // d['parent']['x0'];
       d3.event.stopPropagation();
     })
     .on('mouseover', function(d){
-      tooltip
-        .selectAll('*')
+      d3.selectAll('#treeMapContainer > div.' + d['data']['type'])
+        .style('opacity', 0.7);
+      d3.selectAll('div.maptooltip > *')
         .remove();
       tooltip
         .append('div')
@@ -366,7 +383,9 @@ function showTreeMap(layer){
     .on("mousemove", function(d){
       return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
     })
-    .on("mouseout", function(){
+    .on("mouseout", function(d){
+      d3.selectAll('#treeMapContainer > div.' + d['data']['type'])
+        .style('opacity', 1);
       return tooltip.style("visibility", "hidden");
     });
 }

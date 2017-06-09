@@ -87,7 +87,7 @@ function drawBasicLayer(theProject, svg){
 
 	var g = container.append('g')
 		.attr('class', 'nodes');
-		
+
 	var node = g.selectAll('.node')
 		.data(packLayer(hierarchy).descendants())
 		.enter()
@@ -96,13 +96,13 @@ function drawBasicLayer(theProject, svg){
 			return d.children ? "node" : "leaf node";
 		})
 		.attr('x', function(d) {
-			return 1000 - d.x;
+			return 800 - d.x;
 		})
 		.attr('y', function(d) {
-			return 1000 - d.y;
+			return 800 - d.y;
 		})
 		.attr('transform', function(d) {
-			return "translate(" + (1000 - d.x) + "," + (1000 - d.y) + ")";
+			return "translate(" + (800 - d.x) + "," + (800 - d.y) + ")";
 		})
 	  .attr('d', function(d){
 			if( d['data']['Shape'] ){
@@ -131,7 +131,7 @@ function drawBasicLayer(theProject, svg){
 	    return d['data']['Color'];
 	  });
 
-	var links =container.insert('g', ':first-child')
+	var links = container.insert('g', ':first-child')
 		.attr('class', 'edges')
 		.selectAll("line.edge")
 		.data(theProject['edges'])

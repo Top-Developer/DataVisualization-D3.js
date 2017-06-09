@@ -22,7 +22,7 @@ function closePopup(){
 		d3.select('a[index="'+ project.layer_count +'"]').remove();
 		d3.select('span[index="'+ project.layer_count +'"]').remove();
 		project.layer_count--;
-	}
+	}console.log(project.layer_count);
 	closeReport();
 	closeInfoBox();
 }
