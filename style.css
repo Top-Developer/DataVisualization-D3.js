@@ -5,6 +5,16 @@ circle {
   stroke-width: 1px;
 }
 
+#treeMapContainer{
+  margin: auto;
+}
+
+.unit {
+  box-sizing: border-box;
+  position: absolute;
+  overflow: hidden;
+}
+
 .leaf circle {
   fill: #ff7f0e;
   fill-opacity: 1;
@@ -272,6 +282,11 @@ div.tooltip {
   border-radius: 8px;
 }
 
+.maptooltip{
+  background-color: black;
+  color: white;
+  
+}
 
 #parallelogram {
   width: 30px;

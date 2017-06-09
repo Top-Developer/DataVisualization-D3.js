@@ -4,6 +4,7 @@ function circularLayout(svg, layer){
 
   var nodeToOrder = {};
   var count = 0;
+
   layer['edges'].forEach(function(e){
     console.log(nodeToOrder[e['Sender']]);
     console.log(nodeToOrder[e['Receiver']]);

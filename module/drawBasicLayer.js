@@ -87,6 +87,7 @@ function drawBasicLayer(theProject, svg){
 
 	var g = container.append('g')
 		.attr('class', 'nodes');
+		
 	var node = g.selectAll('.node')
 		.data(packLayer(hierarchy).descendants())
 		.enter()
