@@ -95,9 +95,27 @@
 		<div id = 'node-report' class = 'report'></div>
 		<div id = "overlay">
 			<div id = 'chartContainer'>FusionCharts XT will load here!</div>
-			<div id = 'treeMapContainer'></div>
 		</div>
-		<div class="loader"></div>
+		<div id = 'treeMapContainer'>
+			<div id = 'title'>TreeMap Display</div>
+			<svg></svg>
+			<div>
+				<span>min</span>
+				<span>mid</span>
+				<span>max</span>
+			</div>
+			<div id = 'input'>
+				<input type = 'range'>
+			</div>
+			<div class = 'slider'></div>
+			<div>
+				<span>0$</span>
+				<span>50$</span>
+				<span>100$</span>
+			</div>
+		</div>
+		<div class = 'loader'></div>
+		<div class = 'maptooltip'></div>
 		<script type = 'text/javascript' src = 'library/jquery-2.1.1.min.js'></script>
 		<script type = 'text/javascript' src = 'library/d3.min.js'></script>
 		<script type = 'text/javascript' src = 'fusioncharts/fusioncharts.js'></script>

@@ -12,9 +12,14 @@ function addEventListeners(){
 
   d3.select('div#overlay')
   .on('click', function(e){
-    d3.selectAll('div#chartContainer > *').remove();
+		var svg = d3.select('div#treeMapContainer > svg');
+		console.log(svg);
+		svg.selectAll('*')
+			.remove();
+		d3.select('div#treeMapContainer')
+    	.style('display', 'none');
     d3.select(this)
-    .style('display', 'none');
+    	.style('display', 'none');
   });
 
 	d3.select('#toggle-edges')

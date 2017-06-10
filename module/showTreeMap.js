@@ -292,20 +292,19 @@ console.log(layer);
 
   var width = 800, height = 600;
 
-  var margin_top = screen.height / 2 - 300;
+  var margin_top = $(window).height() / 2 - 300 - 100;
   var margin_left = $(window).width() / 2 - 400;
 
-  var div = d3.select('#treeMapContainer')
+  var div = d3.select('div#treeMapContainer')
+    .style('position', 'absolute')
     .style('width', width)
-    .style('height', height)
-    .style('margin-top', margin_top)
-    .style('margin-left', margin_left);
+    .style('height', height + 200)
+    .style('top', margin_top)
+    .style('left', margin_left);
 
-  d3.selectAll('#treeMapContainer > *')
-    .remove();
-
-  console.log(width);
-  console.log(height);
+  var svg = div.select('svg')
+    .attr('width', width)
+    .attr('height', height);
 
   var treemap = d3.treemap()
     .tile(d3.treemapResquarify)
@@ -325,67 +324,152 @@ console.log(layer);
 
   var tree = treemap(root);
 
-  var tooltip = d3.select("body")
-	.append('div')
-  .attr('class', 'maptooltip')
-	.style('position', 'absolute')
-	.style('z-index', '10')
-	.style('visibility', 'hidden');
+  var tooltip = d3.select("div.maptooltip")
+  	.style('position', 'absolute')
+  	.style('z-index', '10')
+  	.style('visibility', 'hidden');
 
-  var leaf = div.datum(root)
-    .selectAll('.cell')
-    .data(tree.leaves())
+  var magnified = 0;
+
+  var cell = svg
+    .selectAll('g.cell')
+    .data( tree.leaves() )
     .enter()
-    .append('div')
-    .attr('class', function(d){
-      return 'cell ' + d['data']['type'];
+    .append('g')
+    .attr('class', 'cell')
+    .attr("transform", function(d) {
+      return "translate(" + d.x0 + "," + d.y0 + ")";
+    });
+  cell
+    .append('rect')
+    .attr('id', function(d){
+      return d['data']['label'];
     })
-    .style('position', 'absolute')
-    .style('left', function(d){
-      return margin_left + d.x0 + 'px';
+    .attr('width', function(d){
+      return d.x1- d.x0;
     })
-    .style('top', function(d){
-      return margin_top + d.y0 + 'px';
+    .attr('height', function(d){
+      return d.y1- d.y0;
     })
-    .style('width', function(d){
-      return Math.max(0, d.x1 - d.x0 - 1) + 'px';
-    })
-    .style('height', function(d){
-      return Math.max(0, d.y1 - d.y0 - 1) + 'px';
-    })
-    .style('background-color', function(d){
-      //return 'hsl(360, 100%, ' + (100 - d.data.svalue) + '%)';
+    .attr('fill', function(d){
       return d['data']['color'];
     })
-    .on('click', function(d){
-      // console.log(d['parent']);
-      // d['parent']['x0'];
-      d3.event.stopPropagation();
-    })
+    .style('opacity', 1)
     .on('mouseover', function(d){
-      d3.selectAll('#treeMapContainer > div.' + d['data']['type'])
-        .style('opacity', 0.7);
-      d3.selectAll('div.maptooltip > *')
-        .remove();
-      tooltip
-        .append('div')
-        .text(d['data']['label']);
-      tooltip
-        .append('div')
-        .text('value : ' + d['value']);
-      tooltip
-        .append('div')
-        .text('variance : ' + d['data']['svalue']);
-      tooltip
-        .style("visibility", "visible");
-      return tooltip;
+      return d3.select(this).style('opacity', 0.7);
     })
-    .on("mousemove", function(d){
-      return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+    .on('mouseout', function(d){
+      return d3.select(this).style('opacity', 1);
     })
-    .on("mouseout", function(d){
-      d3.selectAll('#treeMapContainer > div.' + d['data']['type'])
-        .style('opacity', 1);
-      return tooltip.style("visibility", "hidden");
+    .on('click', function(d){
+      d3.event.stopPropagation();
+      console.log(d['parent']);
+      if( magnified == 0){
+        var kx = 800 / ( d['parent']['x1'] - d['parent']['x0'] );
+        var ky = 600 / ( d['parent']['y1'] - d['parent']['y0'] );
+        var xo = d['parent']['x0'];
+        var yo = d['parent']['y0'];
+        cell
+          .transition()
+          .duration(750)
+          .attr('transform', function(d){
+            return 'translate(' + (d.x0 - xo) * kx + ',' + (d.y0 - yo) * ky + ')';
+          })
+          .select('rect')
+          .attr('width', function(d){
+            return (d.x1 - d.x0) * kx;
+          })
+          .attr('height', function(d){
+            return (d.y1 - d.y0) * ky;
+          });
+        magnified = 1;
+      }
+      else if( magnified == 1){
+        cell
+          .transition()
+          .duration(750)
+          .attr('transform', function(d){
+            return 'translate(' + d.x0 + ',' + d.y0 + ')';
+          })
+          .select('rect')
+          .attr('width', function(d){
+            return d.x1 - d.x0;
+          })
+          .attr('height', function(d){
+            return d.y1 - d.y0;
+          });
+        magnified = 0;
+      }
+      else {
+        console.log('Unexpected Exception');
+      }
     });
+  cell
+    .append('title')
+    .text(function(d){
+      return d['data']['label'] + '\n' + 'Value = ' + d['data']['value'] + '\n' + 'Variance = ' + d['data']['svalue'] + '\n';
+    });
+
+  var slide_bar = div.select('div#input');
+  var slider = slide_bar.select('input')
+    .attr('type', 'range');
+  slider.on('click', function(){
+    d3.event.stopPropagation();
+  });
+
+  d3.select('div#treeMapContainer')
+    .style('display', 'block');
+
+  // d3.select('#input input')
+  //   .on('input', function(e){
+  //     var t = +d3.select('#input input').property("value");
+  //     svg.selectAll('g.cell > rect')
+  //       .attr('fill', function(d){console.log(t);
+  //         if( d['data']['svalue'] < t ){
+  //           return '#666';
+  //         }
+  //         else{
+  //           return d['data']['color'];
+  //         }
+  //       })
+  //   });
+
+  var sliderWidth = 500;
+
+  var x = d3.scaleLinear()
+    .domain([1,100])
+    .range([0,width])
+    .clamp(true);
+
+  var dispatch = d3.dispatch('sliderChange');
+
+  var slider = d3.select('.slider')
+    .style('with', sliderWidth + 'px');
+
+  var sliderTray = slider.append("div")
+      .attr("class", "slider-tray");
+
+  var sliderHandle = slider.append("div")
+      .attr("class", "slider-handle");
+
+  sliderHandle.append('div')
+    .attr('class', 'slider-handle-icon');
+
+  slider.call(d3.drag()
+    .on('start', function(){
+      dispatch.sliderChange(
+        x.invert(d3.mouse(sliderTray.node())[0])
+      );
+      d3.event.sourceEvent.prevetDefault();
+    })
+    .on('drag', function(){
+      dispatch.sliderChange(
+        x.invert(d3.mouse(sliderTray.node())[0])
+      );
+    })
+  );
+
+  dispatch.on('sliderChange.slider', function(value){
+    sliderHandle.style('left', x(value) + 'px');
+  });
 }
