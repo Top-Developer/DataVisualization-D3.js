@@ -339,7 +339,9 @@ function showTreeMap(layer){
 
   var magnified = 0;
 
-  var cell = svg
+  var container = svg.append('g');
+
+  var cell = container
     .selectAll('g.cell')
     .data( tree.leaves() )
     .enter()
@@ -417,6 +419,16 @@ function showTreeMap(layer){
       return d['data']['label'] + '\n' + 'Value = ' + d['data']['value'] + '\n' + 'Variance = ' + d['data']['svalue'] + '\n';
     });
 
+  var zoom = d3.zoom()
+    .scaleExtent([1, 10])
+    .on('zoom', zoomed);
+
+	function zoomed(){
+		container.attr("transform", d3.event.transform);
+	}
+
+	svg.call(zoom);
+
   d3.select('div#treeMapContainer')
     .style('display', 'block');
 
@@ -451,7 +463,7 @@ function showTreeMap(layer){
           .on('start drag', function() {
             handle.attr('cx', x(x.invert(d3.event.x)));
             var t = x(x.invert(d3.event.x));
-            svg.selectAll('g.cell > rect')
+            container.selectAll('g.cell > rect')
               .attr('fill', function(d){
                 if( d['data']['svalue'] < t / 8 ){
                   return '#666';
@@ -476,4 +488,12 @@ function showTreeMap(layer){
   var handle = slider.insert("circle", ".track-overlay")
       .attr("class", "handle")
       .attr("r", 9);
+
+  d3.select('button#refresh')
+    .on('click', function(){
+      container
+        .attr("transform", function(d) {
+          return "translate(0, 0)";
+        })
+    })
 }
