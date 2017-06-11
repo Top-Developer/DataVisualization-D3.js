@@ -13,7 +13,7 @@ function addEventListeners(){
   d3.select('div#overlay')
   .on('click', function(e){
 		var svg = d3.select('div#treeMapContainer > svg');
-		console.log(svg);
+		//console.log(svg);
 		svg.selectAll('*')
 			.remove();
 		d3.select('div#treeMapContainer')

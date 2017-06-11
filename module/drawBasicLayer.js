@@ -53,10 +53,12 @@ function drawBasicLayer(theProject, svg){
 		return 1;
 	}).sort(function(a, b) { return b.value - a.value; });
 
-	console.log(hierarchy);
+	//console.log(hierarchy);
 
-	var width = +svg.attr('width');console.log(width);
-	var height = +svg.attr('height');console.log(height);
+	var width = +svg.attr('width');
+	//console.log(width);
+	var height = +svg.attr('height');
+	//console.log(height);
 
 	var container = svg.append('g');
 

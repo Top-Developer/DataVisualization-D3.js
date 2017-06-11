@@ -22,7 +22,8 @@ function closePopup(){
 		d3.select('a[index="'+ project.layer_count +'"]').remove();
 		d3.select('span[index="'+ project.layer_count +'"]').remove();
 		project.layer_count--;
-	}console.log(project.layer_count);
+	}
+	//console.log(project.layer_count);
 	closeReport();
 	closeInfoBox();
 }
@@ -62,7 +63,8 @@ function consumptionInOutbound(inout, d){
 		'edges': fEdges,
 		'inout': inout,
 		'theCenterNode': theCenterNode
-	};console.log(project.layers[project.layer_count]);
+	};
+	//console.log(project.layers[project.layer_count]);
 
 	refreshInfoBox(project.layers[project.layer_count]);
 

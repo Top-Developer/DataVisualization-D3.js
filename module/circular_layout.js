@@ -17,8 +17,8 @@ function circularLayout(svg, layer){
   var width = +svg.attr('width');
   var height = +svg.attr('height');
 
-  console.log(node_count);
-  console.log(edge_count);
+  // console.log(node_count);
+  // console.log(edge_count);
 
   var edge = svg
     .append('g')

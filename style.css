@@ -1,9 +1,9 @@
-circle {
+/*circle {
   fill: rgb(31, 119, 180);
   fill-opacity: .25;
   stroke: rgb(31, 119, 180);
   stroke-width: 1px;
-}
+}*/
 
 div#treeMapContainer{
   background-color: white;
@@ -11,14 +11,14 @@ div#treeMapContainer{
 }
 
 div#treeMapContainer div{
-  margin: 0 30px;
+  margin: 0 35px;
 }
 
 div#treeMapContainer div span{
   display : inline-block;
   width : 33.333333%;
   float : left;
-  margin : 10px 0px;
+  margin : 20px 0 0;
   text-align: center;
 }
 
@@ -28,10 +28,6 @@ div#treeMapContainer div span:first-child{
 
 div#treeMapContainer div span:last-child{
   text-align: right;
-}
-
-div#treeMapContainer div#input input{
-  width: 100%;
 }
 
 div#treeMapContainer div#title{
@@ -203,15 +199,20 @@ h2.underline {
   padding: 8px 12px;
   font-weight: 700;
 }
+
 .hidden {
   visibility: hidden;
 }
+
 input#min-variance {
   width: 160px;
+  cursor: pointer;
 }
+
 .legend{
   padding: 5px;
 }
+
 .color-box{
   box-sizing: border-box;
   display: inline-block;
@@ -220,6 +221,7 @@ input#min-variance {
   border-radius: 50%;
   margin: 0px 0px -7px 5px;
 }
+
 .comment{
   display: inline-block;
   vertical-align: 5px;
@@ -232,26 +234,33 @@ input#min-variance {
   text-decoration: none;
   line-height : 1;
 }
+
 .close::after{
   font-size: 24px;
   font-weight: bold;
   content : 'x';
 }
+
 .close:hover{
   color : red;
 }
+
 #color-box-blue{
   background-color: #668de5;
 }
+
 #color-box-green{
   background-color: #71e096;
 }
+
 #color-box-cyan{
   background-color: #90d4f7;
 }
+
 #color-box-purple{
   background-color : #c497f2;
 }
+
 #id-search, .btn-search{
   display : inline-block;
   margin : 5px;
@@ -261,12 +270,14 @@ input#min-variance {
   display : block;
   width : 100%;
 }
+
 .col-4{
   display : inline-block;
   width : 33.333333%;
   float : left;
   margin : 10px 0px;
 }
+
 .col-2{
   display : inline-block;
   width : 16.666666%;
@@ -274,16 +285,19 @@ input#min-variance {
   text-align : center;
   margin : 10px 0px;
 }
+
 .scrollable{
   max-height : 600px;
   overflow : auto;
 }
+
 .breadcrumb{
   position : absolute;
   left : 15px;
   top : 15px;
   font-size : 14px;
 }
+
 .treeMapLink{
   position : absolute;
   left : 15px;
@@ -294,6 +308,7 @@ input#min-variance {
 div.breadcrumb a{
   margin : 0px 10px;
 }
+
 div.treeMapLink{
   margin-top : 20px;
 }
@@ -479,36 +494,37 @@ div.tooltip {
 
 /*--------------- d3.js slider ----------------*/
 
-.slider {
-  position: relative;
-  top: 40px;
-  left: 40px;
+.ticks {
+  font: 10px sans-serif;
 }
 
-.slider-tray {
-  position: absolute;
-  width: 100%;
-  height: 6px;
-  border: solid 1px #ccc;
-  border-top-color: #aaa;
-  border-radius: 4px;
-  background-color: #f0f0f0;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+.track,
+.track-inset,
+.track-overlay {
+  stroke-linecap: round;
 }
 
-.slider-handle {
-  position: absolute;
-  top: 3px;
+.track {
+  stroke: #000;
+  stroke-opacity: 0.3;
+  stroke-width: 10px;
 }
 
-.slider-handle-icon {
-  width: 14px;
-  height: 14px;
-  border: solid 1px #aaa;
-  position: absolute;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-  top: -7px;
-  left: -7px;
+.track-inset {
+  stroke: #ddd;
+  stroke-width: 8px;
+}
+
+.track-overlay {
+  pointer-events: stroke;
+  stroke-width: 50px;
+  stroke: transparent;
+  cursor: pointer;
+}
+
+.handle {
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: 0.5;
+  stroke-width: 1.25px;
 }

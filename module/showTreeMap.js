@@ -1,7 +1,7 @@
 'use strict'
 
 function showTreeMap(layer){
-console.log(layer);
+//console.log(layer);
   var sr = [], pr = [], sp = [], fp = [], done, theNode, total = {
     'sr': 0,
     'pr': 0,
@@ -26,8 +26,8 @@ console.log(layer);
 					});
 					if( theNode == null ){
 						alert('unexpected exception : theNode');
-						console.log(e);
-						console.log(layer);
+						//console.log(e);
+						//console.log(layer);
 					}
 				}
 				else if( layer['inout'] == 0 ){
@@ -38,13 +38,13 @@ console.log(layer);
 					});
 					if( theNode == null ){
 						alert('unexpected exception : theNode');
-						console.log(e);
-						console.log(layer);
+						//console.log(e);
+						//console.log(layer);
 					}
 				}
 				else{
 					alert('unexpected exception : layer_inout');
-					console.log(layer);
+					//console.log(layer);
 				}
 
 				if( theNode['Type'] == 'SR') {
@@ -131,8 +131,8 @@ console.log(layer);
 					});
 					if( theNode == null ){
 						alert('unexpected exception : theNode');
-						console.log(e);
-						console.log(layer);
+						//console.log(e);
+						//console.log(layer);
 					}
 				}
 				else if( layer['inout'] == 0 ){
@@ -143,20 +143,21 @@ console.log(layer);
 					});
 					if( theNode == null ){
 						alert('unexpected exception : theNode');
-						console.log(e);
-						console.log(layer);
+						//console.log(e);
+						//console.log(layer);
 					}
 				}
 				else{
 					alert('unexpected exception : layer_inout');
-					console.log(layer);
+					//console.log(layer);
 				}
 
 				if( theNode['Type'] == 'SR') {
 					sr.forEach(function(n){
 						if( n['label'] == theNode['Node'] ){
 							n['value'] = parseFloat( e['Cost'] );
-							total['sr'] += parseFloat( e['Cost'] );console.log(total['sr']);
+							total['sr'] += parseFloat( e['Cost'] );
+              //console.log(total['sr']);
 							done = true;
 						}
 					});
@@ -168,7 +169,8 @@ console.log(layer);
               color: theNode['Color'],
               type: 'SR'
 						});
-						total['sr'] += parseFloat( e['Cost'] );console.log(total['sr']);
+						total['sr'] += parseFloat( e['Cost'] );
+            //console.log(total['sr']);
 						done = true;
 					}
 				}
@@ -176,7 +178,8 @@ console.log(layer);
 					pr.forEach(function(n){
 						if( n['label'] == theNode['Node'] ){
 							n['value'] = parseFloat( e['Cost'] );
-							total['pr'] += parseFloat( e['Cost'] );console.log(total['pr']);
+							total['pr'] += parseFloat( e['Cost'] );
+              //console.log(total['pr']);
 							done = true;
 						}
 					});
@@ -188,7 +191,8 @@ console.log(layer);
               color: theNode['Color'],
               type: 'PR'
 						});
-						total['pr'] += parseFloat( e['Cost'] );console.log(total['pr']);
+						total['pr'] += parseFloat( e['Cost'] );
+            //console.log(total['pr']);
 						done = true;
 					}
 				}
@@ -196,7 +200,8 @@ console.log(layer);
 					sp.forEach(function(n){
 						if( n['label'] == theNode['Node'] ){
 							n['value'] = parseFloat( e['Cost'] );
-							total['sp'] += parseFloat( e['Cost'] );console.log(total['sp']);
+							total['sp'] += parseFloat( e['Cost'] );
+              //console.log(total['sp']);
 							done = true;
 						}
 					});
@@ -208,7 +213,8 @@ console.log(layer);
               color: theNode['Color'],
               type: 'SP'
 						});
-						total['sp'] += parseFloat( e['Cost'] );console.log(total['sp']);
+						total['sp'] += parseFloat( e['Cost'] );
+            //console.log(total['sp']);
 						done = true;
 					}
 				}
@@ -216,7 +222,8 @@ console.log(layer);
 					fp.forEach(function(n){
 						if( n['label'] == theNode['Node'] ){
 							n['value'] = parseFloat( e['Cost'] );
-							total['fp'] += parseFloat( e['Cost'] );console.log(total['fp']);
+							total['fp'] += parseFloat( e['Cost'] );
+              //console.log(total['fp']);
 							done = true;
 						}
 					});
@@ -228,7 +235,8 @@ console.log(layer);
               color: theNode['Color'],
               type: 'FP'
 						});
-						total['fp'] += parseFloat( e['Cost'] );console.log(total['fp']);
+						total['fp'] += parseFloat( e['Cost'] );
+            //console.log(total['fp']);
 						done = true;
 					}
 				}
@@ -261,34 +269,35 @@ console.log(layer);
     label: 'root',
     children: []
   };
-  console.log(total['sr']);
+  //console.log(total['sr']);
   if( total['sr'] != 0 ){
     data.children.push({
       label: 'Support Resource',
       children: sr
     });
   }
-  console.log(total['pr']);
+  //console.log(total['pr']);
   if( total['pr'] != 0 ){
     data.children.push({
       label: 'Production Resource',
       children: pr
     });
   }
-  console.log(total['sp']);
+  //console.log(total['sp']);
   if( total['sp'] != 0 ){
     data.children.push({
       label: 'Semi-finished Product',
       children: sp
     });
   }
-  console.log(total['fp']);
+  //console.log(total['fp']);
   if( total['fp'] != 0 ){
     data.children.push({
       label: 'Finished Product',
       children: fp
     });
-  }console.log(data);
+  }
+  //console.log(data);
 
   var width = 800, height = 600;
 
@@ -297,14 +306,15 @@ console.log(layer);
 
   var div = d3.select('div#treeMapContainer')
     .style('position', 'absolute')
-    .style('width', width)
+    .style('width', width + 100)
     .style('height', height + 200)
     .style('top', margin_top)
     .style('left', margin_left);
 
   var svg = div.select('svg')
     .attr('width', width)
-    .attr('height', height);
+    .attr('height', height)
+    .style('margin-left', 100 / 2);
 
   var treemap = d3.treemap()
     .tile(d3.treemapResquarify)
@@ -319,8 +329,6 @@ console.log(layer);
     .sort(function(a, b) {
       return b.value - a.value;
     });
-
-  console.log(root);
 
   var tree = treemap(root);
 
@@ -363,7 +371,6 @@ console.log(layer);
     })
     .on('click', function(d){
       d3.event.stopPropagation();
-      console.log(d['parent']);
       if( magnified == 0){
         var kx = 800 / ( d['parent']['x1'] - d['parent']['x0'] );
         var ky = 600 / ( d['parent']['y1'] - d['parent']['y0'] );
@@ -401,7 +408,7 @@ console.log(layer);
         magnified = 0;
       }
       else {
-        console.log('Unexpected Exception');
+        // console.log('Unexpected Exception');
       }
     });
   cell
@@ -410,66 +417,63 @@ console.log(layer);
       return d['data']['label'] + '\n' + 'Value = ' + d['data']['value'] + '\n' + 'Variance = ' + d['data']['svalue'] + '\n';
     });
 
-  var slide_bar = div.select('div#input');
-  var slider = slide_bar.select('input')
-    .attr('type', 'range');
-  slider.on('click', function(){
-    d3.event.stopPropagation();
-  });
-
   d3.select('div#treeMapContainer')
     .style('display', 'block');
 
-  // d3.select('#input input')
-  //   .on('input', function(e){
-  //     var t = +d3.select('#input input').property("value");
-  //     svg.selectAll('g.cell > rect')
-  //       .attr('fill', function(d){console.log(t);
-  //         if( d['data']['svalue'] < t ){
-  //           return '#666';
-  //         }
-  //         else{
-  //           return d['data']['color'];
-  //         }
-  //       })
-  //   });
-
-  var sliderWidth = 500;
+  var slider_svg = d3.select("svg.slider-svg"),
+    margin = {right: 50, left: 50},
+    slider_width = +slider_svg.attr("width") - margin.left - margin.right,
+    slider_height = +slider_svg.attr("height");
 
   var x = d3.scaleLinear()
-    .domain([1,100])
-    .range([0,width])
-    .clamp(true);
+      .domain([0, 100])
+      .range([0, slider_width])
+      .clamp(true);
 
-  var dispatch = d3.dispatch('sliderChange');
+  slider_svg
+    .select('*')
+    .remove();
 
-  var slider = d3.select('.slider')
-    .style('with', sliderWidth + 'px');
+  var slider = slider_svg.append('g')
+      .attr('class', 'slider')
+      .attr('transform', 'translate(' + margin.left + ',' + 20 + ')');
 
-  var sliderTray = slider.append("div")
-      .attr("class", "slider-tray");
-
-  var sliderHandle = slider.append("div")
-      .attr("class", "slider-handle");
-
-  sliderHandle.append('div')
-    .attr('class', 'slider-handle-icon');
-
-  slider.call(d3.drag()
-    .on('start', function(){
-      dispatch.sliderChange(
-        x.invert(d3.mouse(sliderTray.node())[0])
+  slider.append("line")
+      .attr('class', 'track')
+      .attr('x1', x.range()[0])
+      .attr('x2', x.range()[1])
+    .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+      .attr('class', 'track-inset')
+    .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+      .attr('class', 'track-overlay')
+      .call(d3.drag()
+          .on('start.interrupt', function() { slider.interrupt(); })
+          .on('start drag', function() {
+            handle.attr('cx', x(x.invert(d3.event.x)));
+            var t = x(x.invert(d3.event.x));
+            svg.selectAll('g.cell > rect')
+              .attr('fill', function(d){
+                if( d['data']['svalue'] < t / 8 ){
+                  return '#666';
+                }
+                else{
+                  return d['data']['color'];
+                }
+              })
+          })
       );
-      d3.event.sourceEvent.prevetDefault();
-    })
-    .on('drag', function(){
-      dispatch.sliderChange(
-        x.invert(d3.mouse(sliderTray.node())[0])
-      );
-    })
-  );
 
-  dispatch.on('sliderChange.slider', function(value){
-    sliderHandle.style('left', x(value) + 'px');
-  });
+  slider.insert("g", ".track-overlay")
+      .attr("class", "ticks")
+      .attr("transform", "translate(0," + 18 + ")")
+    .selectAll("text")
+    .data(x.ticks(10))
+    .enter().append("text")
+      .attr("x", x)
+      .attr("text-anchor", "middle")
+      .text(function(d) { return d + '$'; });
+
+  var handle = slider.insert("circle", ".track-overlay")
+      .attr("class", "handle")
+      .attr("r", 9);
 }

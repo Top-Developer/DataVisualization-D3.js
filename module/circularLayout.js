@@ -6,25 +6,25 @@ function circularLayout(svg, layer){
   var count = 0;
 
   layer['edges'].forEach(function(e){
-    console.log(nodeToOrder[e['Sender']]);
-    console.log(nodeToOrder[e['Receiver']]);
+    //console.log(nodeToOrder[e['Sender']]);
+    //console.log(nodeToOrder[e['Receiver']]);
     if( layer['inout'] == 1 ){
       if( nodeToOrder[e['Sender']] == undefined ){
         nodeToOrder[e['Sender']] = count;
-        console.log(count);
-        console.log(e['Sender']);
+        //console.log(count);
+        //console.log(e['Sender']);
         count++;
       }
     }
     else if( layer['inout'] == 0 ){
       if( nodeToOrder[e['Receiver']] == undefined ){
         nodeToOrder[e['Receiver']] = count;
-        console.log(count);
+        //console.log(count);
         count++;
       }
     }
-    console.log(nodeToOrder[e['Sender']]);
-    console.log(nodeToOrder[e['Receiver']]);
+    //console.log(nodeToOrder[e['Sender']]);
+    //console.log(nodeToOrder[e['Receiver']]);
   });
 
   svg.on('click', function(){
@@ -66,7 +66,7 @@ function circularLayout(svg, layer){
     .attr('x', function(d){
       if ( nodeToOrder[d['Node']] == undefined ){
         return 400;
-      }else{console.log(d['Node']);console.log(nodeToOrder[d['Node']]);
+      }else{//console.log(d['Node']);console.log(nodeToOrder[d['Node']]);
         return 400 + 250 * Math.cos( 2 * Math.PI * nodeToOrder[d['Node']] / count);
       }
     })
