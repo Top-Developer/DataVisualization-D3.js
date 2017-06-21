@@ -21,7 +21,6 @@ $(document).ready(function(){
         else if( n['Node'].substring(0,2) == 'SF' || n['Node'].substring(0,2) == 'FP' ){
           n['Shape'] = 'hexagon';
         }
-
       });
 
 			$.ajax({

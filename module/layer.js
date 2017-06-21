@@ -62,7 +62,6 @@ function refreshInfoBox(layer){
 									'<div class = "col-2">' + e['Variance'] + '</div>' +
 									'<div class = "col-2">' + e['UoM'] + '</div>' +
                 '</div>';
-
 	});
 	innerHTML += '</div>';
 

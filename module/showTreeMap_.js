@@ -17,8 +17,6 @@ function showTreeMap(layer){
 	layer['edges'].forEach(function(e){
 		done = false;
 		theNode = null;
-		//console.log(e);
-
 
 		if( layer['inout'] == 1 ){
 			layer['nodes'].forEach(function(n){
@@ -56,6 +54,7 @@ function showTreeMap(layer){
 				svalue: parseFloat( e['Variance'] )
 			});
 			total['sr'] += parseFloat( e['Cost'] );
+			console.log('sr: ');console.log(e);
 		}
 		else if( theNode['Type'] == 'PR') {
 			pr.push({
@@ -64,6 +63,7 @@ function showTreeMap(layer){
 				svalue: parseFloat( e['Variance'] )
 			});
 			total['pr'] += parseFloat( e['Cost'] );
+			console.log('pr: ');console.log(e);
 		}
 		else if( theNode['Type'] == 'SP') {
 			sp.push({
@@ -72,14 +72,16 @@ function showTreeMap(layer){
 				svalue: parseFloat( e['Variance'] )
 			});
 			total['sp'] += parseFloat( e['Cost'] );
+			console.log('sp: ');console.log(e);
 		}
 		else if( theNode['Type'] == 'FP') {
-			sp.push({
+			fp.push({
 				label: theNode['Node'],
 				value: parseFloat( e['Cost'] ),
 				svalue: parseFloat( e['Variance'] )
 			});
 			total['fp'] += parseFloat( e['Cost'] );
+			console.log('fp: ');console.log(e);
 		}
 		else{}
 	});
