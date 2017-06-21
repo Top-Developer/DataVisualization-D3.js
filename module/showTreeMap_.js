@@ -1,6 +1,6 @@
 function showTreeMap(layer){
 
-	d3.select('div#overlay')
+	d3.select('div#chartContainer')
 		.style('display', 'block');
 
 	var sr = [], pr = [], sp  = [], fp = [], total = [];
@@ -54,7 +54,7 @@ function showTreeMap(layer){
 				svalue: parseFloat( e['Variance'] )
 			});
 			total['sr'] += parseFloat( e['Cost'] );
-			console.log('sr: ');console.log(e);
+			//console.log('sr: ');console.log(e);
 		}
 		else if( theNode['Type'] == 'PR') {
 			pr.push({
@@ -63,7 +63,7 @@ function showTreeMap(layer){
 				svalue: parseFloat( e['Variance'] )
 			});
 			total['pr'] += parseFloat( e['Cost'] );
-			console.log('pr: ');console.log(e);
+			//console.log('pr: ');console.log(e);
 		}
 		else if( theNode['Type'] == 'SP') {
 			sp.push({
@@ -72,7 +72,7 @@ function showTreeMap(layer){
 				svalue: parseFloat( e['Variance'] )
 			});
 			total['sp'] += parseFloat( e['Cost'] );
-			console.log('sp: ');console.log(e);
+			//console.log('sp: ');console.log(e);
 		}
 		else if( theNode['Type'] == 'FP') {
 			fp.push({
@@ -81,7 +81,7 @@ function showTreeMap(layer){
 				svalue: parseFloat( e['Variance'] )
 			});
 			total['fp'] += parseFloat( e['Cost'] );
-			console.log('fp: ');console.log(e);
+			//console.log('fp: ');console.log(e);
 		}
 		else{}
 	});

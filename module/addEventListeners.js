@@ -18,6 +18,8 @@ function addEventListeners(){
 			.remove();
 		d3.select('div#treeMapContainer')
     	.style('display', 'none');
+		d3.select('div#chartContainer')
+    	.style('display', 'none');
     d3.select(this)
     	.style('display', 'none');
   });
