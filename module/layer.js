@@ -42,9 +42,9 @@ function refreshInfoBox(layer){
 										'<span class = "line"></span>' +
 										'<div class = "row">' +
 											'<div class = "col-4">' + passive +'</div>' +
-											'<div class = "col-2">Version</div>' +
 											'<div class = "col-2">Cost</div>' +
 											'<div class = "col-2">Quantity</div>' +
+											'<div class = "col-2">Variance</div>' +
 											'<div class = "col-2">UoM</div>' +
 										'</div>' +
 										'<div class = "row scrollable">';
@@ -57,11 +57,12 @@ function refreshInfoBox(layer){
       innerHTML += '<div class = "row">' +
                       '<div class = "col-4">' + e['Receiver'] + '</div>';
     }
-    innerHTML += '<div class = "col-2">' + e['Version'] + '</div>' +
-									'<div class = "col-2">' + Math.round( e['Cost'] * 100 ) / 100 + '</div>' +
+		innerHTML += '<div class = "col-2">' + Math.round( e['Cost'] * 100 ) / 100 + '</div>' +
                   '<div class = "col-2">' + Math.round( e['Quantity'] * 100 ) / 100 + '</div>' +
+									'<div class = "col-2">' + e['Variance'] + '</div>' +
 									'<div class = "col-2">' + e['UoM'] + '</div>' +
                 '</div>';
+
 	});
 	innerHTML += '</div>';
 

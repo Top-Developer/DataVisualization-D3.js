@@ -9,222 +9,85 @@ function showTreeMap(layer){
 	total['sp'] = 0;
 	total['fp'] = 0;
 
-	console.log(layer['edges']);
-	console.log(layer['nodes']);
+	//console.log(layer['edges']);
+	//console.log(layer['nodes']);
 
 	var done, theNode;
 
 	layer['edges'].forEach(function(e){
 		done = false;
-		theNode = null;console.log(e);
-		if( e['Version'] == 'A/T' ){
-			if( parseFloat( e['Cost'] ) != 0.0 ){
-				if( layer['inout'] == 1 ){
-					layer['nodes'].forEach(function(n){
-						if( n['Node'] == e['Sender'] ){
-							theNode = n;console.log(theNode);
-						}
-					});
-					if( theNode == null ){
-						alert('unexpected exception : theNode');
-						console.log(e);
-						console.log(layer);
-					}
-				}
-				else if( layer['inout'] == 0 ){
-					layer['nodes'].forEach(function(n){
-						if( n['Node'] == e['Receiver'] ){
-							theNode = n;
-						}
-					});
-					if( theNode == null ){
-						alert('unexpected exception : theNode');
-						console.log(e);
-						console.log(layer);
-					}
-				}
-				else{
-					alert('unexpected exception : layer_inout');
-					console.log(layer);
-				}
+		theNode = null;
+		//console.log(e);
 
-				if( theNode['Type'] == 'SR') {
-					sr.forEach(function(n){
-						if( n['label'] == theNode['Node'] ){
-							n['svalue'] = parseFloat( e['Cost'] );
-							done = true;
-						}
-					});
-					if( done == false ){
-						sr.push({
-							label: theNode['Node'],
-							svalue: parseFloat( e['Cost'] ),
-							value: 0
-						});
-						done = true;
-					}
+
+		if( layer['inout'] == 1 ){
+			layer['nodes'].forEach(function(n){
+				if( n['Node'] == e['Sender'] ){
+					theNode = n;
 				}
-				if( theNode['Type'] == 'PR') {
-					pr.forEach(function(n){
-						if( n['label'] == theNode['Node'] ){
-							n['svalue'] = parseFloat( e['Cost'] );
-							done = true;
-						}
-					});
-					if( done == false ){
-						pr.push({
-							label: theNode['Node'],
-							svalue: parseFloat( e['Cost'] ),
-							value: 0
-						});
-						done = true;
-					}
-				}
-				if( theNode['Type'] == 'SP') {
-					sp.forEach(function(n){
-						if( n['label'] == theNode['Node'] ){
-							n['svalue'] = parseFloat( e['Cost'] );
-							done = true;
-						}
-					});
-					if( done == false ){
-						sp.push({
-							label: theNode['Node'],
-							svalue: parseFloat( e['Cost'] ),
-							value: 0
-						});
-						done = true;
-					}
-				}
-				if( theNode['Type'] == 'FP') {
-					fp.forEach(function(n){
-						if( n['label'] == theNode['Node'] ){
-							n['svalue'] = parseFloat( e['Cost'] );
-							done = true;
-						}
-					});
-					if( done == false ){
-						fp.push({
-							label: theNode['Node'],
-							svalue: parseFloat( e['Cost'] ),
-							value: 0
-						});
-						done = true;
-					}
-				}
+			});
+			if( theNode == null ){
+				alert('unexpected exception : theNode');
+				console.log(e);
+				console.log(layer);
 			}
 		}
-		else if( e['Version'] == 'V002' ){
-			if( parseFloat( e['Cost'] ) != 0.0 ){
-				if( layer['inout'] == 1 ){
-					layer['nodes'].forEach(function(n){
-						if( n['Node'] == e['Sender'] ){
-							theNode = n;
-						}
-					});
-					if( theNode == null ){
-						alert('unexpected exception : theNode');
-						console.log(e);
-						console.log(layer);
-					}
+		else if( layer['inout'] == 0 ){
+			layer['nodes'].forEach(function(n){
+				if( n['Node'] == e['Receiver'] ){
+					theNode = n;
 				}
-				else if( layer['inout'] == 0 ){
-					layer['nodes'].forEach(function(n){
-						if( n['Node'] == e['Receiver'] ){
-							theNode = n;
-						}
-					});
-					if( theNode == null ){
-						alert('unexpected exception : theNode');
-						console.log(e);
-						console.log(layer);
-					}
-				}
-				else{
-					alert('unexpected exception : layer_inout');
-					console.log(layer);
-				}
-
-				if( theNode['Type'] == 'SR') {
-					sr.forEach(function(n){
-						if( n['label'] == theNode['Node'] ){
-							n['value'] = parseFloat( e['Cost'] );
-							total['sr'] += parseFloat( e['Cost'] );console.log(total['sr']);
-							done = true;
-						}
-					});
-					if( done == false ){
-						sr.push({
-							label: theNode['Node'],
-							value: parseFloat( e['Cost'] ),
-							svalue: 0
-						});
-						total['sr'] += parseFloat( e['Cost'] );console.log(total['sr']);
-						done = true;
-					}
-				}
-				if( theNode['Type'] == 'PR') {
-					pr.forEach(function(n){
-						if( n['label'] == theNode['Node'] ){
-							n['value'] = parseFloat( e['Cost'] );
-							total['pr'] += parseFloat( e['Cost'] );console.log(total['pr']);
-							done = true;
-						}
-					});
-					if( done == false ){
-						pr.push({
-							label: theNode['Node'],
-							value: parseFloat( e['Cost'] ),
-							svalue: 0
-						});
-						total['pr'] += parseFloat( e['Cost'] );console.log(total['pr']);
-						done = true;
-					}
-				}
-				if( theNode['Type'] == 'SP') {
-					sp.forEach(function(n){
-						if( n['label'] == theNode['Node'] ){
-							n['value'] = parseFloat( e['Cost'] );
-							total['sp'] += parseFloat( e['Cost'] );console.log(total['sp']);
-							done = true;
-						}
-					});
-					if( done == false ){
-						sp.push({
-							label: theNode['Node'],
-							value: parseFloat( e['Cost'] ),
-							svalue: 0
-						});
-						total['sp'] += parseFloat( e['Cost'] );console.log(total['sp']);
-						done = true;
-					}
-				}
-				if( theNode['Type'] == 'FP') {
-					fp.forEach(function(n){
-						if( n['label'] == theNode['Node'] ){
-							n['value'] = parseFloat( e['Cost'] );
-							total['fp'] += parseFloat( e['Cost'] );console.log(total['fp']);
-							done = true;
-						}
-					});
-					if( done == false ){
-						fp.push({
-							label: theNode['Node'],
-							value: parseFloat( e['Cost'] ),
-							svalue: 0
-						});
-						total['fp'] += parseFloat( e['Cost'] );console.log(total['fp']);
-						done = true;
-					}
-				}
+			});
+			if( theNode == null ){
+				alert('unexpected exception : theNode');
+				console.log(e);
+				console.log(layer);
 			}
 		}
+		else{
+			alert('unexpected exception : layer_inout');
+			console.log(layer);
+		}
+
+		if( theNode['Type'] == 'SR') {
+			sr.push({
+				label: theNode['Node'],
+				value: parseFloat( e['Cost'] ),
+				svalue: parseFloat( e['Variance'] )
+			});
+			total['sr'] += parseFloat( e['Cost'] );
+		}
+		else if( theNode['Type'] == 'PR') {
+			pr.push({
+				label: theNode['Node'],
+				value: parseFloat( e['Cost'] ),
+				svalue: parseFloat( e['Variance'] )
+			});
+			total['pr'] += parseFloat( e['Cost'] );
+		}
+		else if( theNode['Type'] == 'SP') {
+			sp.push({
+				label: theNode['Node'],
+				value: parseFloat( e['Cost'] ),
+				svalue: parseFloat( e['Variance'] )
+			});
+			total['sp'] += parseFloat( e['Cost'] );
+		}
+		else if( theNode['Type'] == 'FP') {
+			sp.push({
+				label: theNode['Node'],
+				value: parseFloat( e['Cost'] ),
+				svalue: parseFloat( e['Variance'] )
+			});
+			total['fp'] += parseFloat( e['Cost'] );
+		}
+		else{}
 	});
 
-	console.log(sr);console.log('\n');
-	console.log(pr);console.log('\n');
-	console.log(sp);console.log('\n');
-	console.log(fp);console.log('\n');
+	// console.log(sr);console.log('\n');
+	// console.log(pr);console.log('\n');
+	// console.log(sp);console.log('\n');
+	// console.log(fp);console.log('\n');
 
 	sr.forEach(function(item, index, object){
 		if( item['value'] == 0 ){
@@ -247,16 +110,16 @@ function showTreeMap(layer){
 		}
 	});
 
-	console.log(sr);console.log('\n');
-	console.log(pr);console.log('\n');
-	console.log(sp);console.log('\n');
-	console.log(fp);console.log('\n');
-	console.log(total['sr']);console.log('\n');
-	console.log(total['pr']);console.log('\n');
-	console.log(total['sp']);console.log('\n');
-	console.log(total['fp']);console.log('\n');
+	// console.log(sr);console.log('\n');
+	// console.log(pr);console.log('\n');
+	// console.log(sp);console.log('\n');
+	// console.log(fp);console.log('\n');
+	// console.log(total['sr']);console.log('\n');
+	// console.log(total['pr']);console.log('\n');
+	// console.log(total['sp']);console.log('\n');
+	// console.log(total['fp']);console.log('\n');
 
-	total['all'] = total['sr'] + total['pr'] + total['sp'] + total['fp'];	console.log(total);
+	total['all'] = total['sr'] + total['pr'] + total['sp'] + total['fp'];	//console.log(total);
 
 	var data = [
 		{
@@ -300,9 +163,16 @@ function showTreeMap(layer){
 		});
 	}
 
+	var suffix;
+	if( layer['inout'] == 1 ){
+		suffix = 'Inbound Consumption';
+	}else{
+		suffix = 'Outbound Consumption';
+	}
+
 	FusionCharts.ready(function(){
 		d3.select('#chartContainer').style('display', 'block');
-    var revenueChart = new FusionCharts({
+		var revenueChart = new FusionCharts({
 			type: 'treemap',
       renderAt: 'chartContainer',
 			width: '1100',
@@ -326,7 +196,7 @@ function showTreeMap(layer){
 		        "showlegend": "1",
 		        "legenditemfontcolor": "3d5c5c",
 		        "algorithm": "squarified",
-		        "caption": "FusionChart shows cost and variances",
+		        "caption": layer['theCenterNode']['Node'] + ' ' +suffix,
 		        "legendscalelinethickness": "0",
 		        "legendcaptionfontsize": "10",
 		        "subcaption": "Cost and Variance",
@@ -337,26 +207,26 @@ function showTreeMap(layer){
 				"colorrange": {
 	        "mapbypercent": "0",
 	        "gradient": "1",
-	        "minvalue": "0",
-	        "code": "ffffff",
+	        "minvalue": -6000,
+	        "code": "e24b1a",
 	        "startlabel": "Min",
 	        "endlabel": "Max",
 	        "color": [
 						{
-							"code": "f0a28c",
-	            "maxvalue": "50",
+							"code": "ffffff",
+	            "maxvalue": 0,
 	            "label": "Mid"
 						},
 						{
-							"code": "e24b1a",
-	            "maxvalue": "100",
+							"code": "6da81e",
+	            "maxvalue": 6000,
 	            "label": "AVERAGE"
 						}
 	        ]
 				}
 			}
 		});
-		console.log(data);
+		//console.log(data);
 		revenueChart.render();
 	})
 }
